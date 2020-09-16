@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владислав Лукин](https://up.htmlacademy.ru/javascript/21/user/201401).
-* Наставник: `Неизвестно`.
+* Наставник: [Никита Трофимов](https://htmlacademy.ru/profile/id76777).
 
 ---
 

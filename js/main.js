@@ -6,6 +6,10 @@ const PHOTOS_LIST = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http
 const MAP = document.querySelector(`.map`);
 const PIN_TEMPLATE = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const PIN_CONTAINER = document.querySelector(`.map__pins`);
+const START_CHECKIN = 12;
+const OCLOCK = `:00`;
+const PIN_WIDTH = 40;
+const PIN_LOCATION_Y_START = 130;
 let ads = [];
 let features;
 let photos;
@@ -38,18 +42,18 @@ function fillOffers() {
         title: `Title${i}`,
         address: `${getRandomInt(600)},${getRandomInt(350)}`,
         price: getRandomInt(1000),
-        type: ROOM_TYPE[i % 4],
+        type: ROOM_TYPE[i % ROOM_TYPE.length],
         rooms: getRandomInt(4),
         guests: getRandomInt(3),
-        checkin: `${12 + getRandomInt(2)}+:00`,
-        checkout: `${12 + getRandomInt(2)}+:00`,
+        checkin: `${START_CHECKIN + getRandomInt(2)}+${OCLOCK}`,
+        checkout: `${START_CHECKIN + getRandomInt(2)}+${OCLOCK}`,
         features: getRandomArr(features, FEATURES_LIST, getRandomInt(FEATURES_LIST.length), FEATURES_LIST.length),
         description: `desc${i}`,
         photos: getRandomArr(photos, PHOTOS_LIST, getRandomInt(PHOTOS_LIST.length), PHOTOS_LIST.length)
       },
       location: {
-        x: getRandomInt(MAP.offsetWidth - 40),
-        y: 130 + getRandomInt(500)
+        x: getRandomInt(MAP.offsetWidth - PIN_WIDTH),
+        y: PIN_LOCATION_Y_START + getRandomInt(500)
       }
     };
     ads.push(obj);
@@ -59,7 +63,7 @@ function fillOffers() {
 function fillTemplate() {
   for (let i = 0; i < ads.length; i++) {
     let fragment = PIN_TEMPLATE.cloneNode(true);
-    fragment.setAttribute(`style`, `left: ${ads[i].location.x + 20}px; top: ${ads[i].location.y + 20}px`);
+    fragment.setAttribute(`style`, `left: ${ads[i].location.x + PIN_WIDTH / 2}px; top: ${ads[i].location.y + PIN_WIDTH / 2}px`);
     fragment.querySelector(`img`).src = ads[i].author.avatar;
     fragment.querySelector(`img`).alt = ads[i].offer.title;
     fragments.push(fragment);

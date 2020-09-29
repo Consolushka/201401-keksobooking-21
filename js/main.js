@@ -13,7 +13,7 @@ const PHOTOS_LIST = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http
 const MAP = document.querySelector(`.map`);
 const PIN_TEMPLATE = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const CARD_TEMPLATE = document.querySelector(`#card`).content.querySelector(`.map__card`);
-let CARD_PHOTO_TEMPLATE = document.querySelector(`#card`).content.querySelector(`.popup__photo`);
+const CARD_PHOTO_TEMPLATE = document.querySelector(`#card`).content.querySelector(`.popup__photo`);
 const PIN_CONTAINER = document.querySelector(`.map__pins`);
 const START_CHECKIN = 12;
 const OCLOCK = `:00`;
@@ -116,7 +116,7 @@ function fillCardTemplate() {
     fragment.querySelector(`.popup__description `).textContent = ads[i].offer.description;
     fragment.querySelector(`.popup__avatar`).src = ads[i].author.avatar;
     refactorLists(fragment);
-    fillCardList(featuresWrapper, `features`, ads[i], null, `.popup__feature`);
+    fillCardList(featuresWrapper, `features`, ads[i], null);
     fillCardList(photosWrapper, `photos`, ads[i], CARD_PHOTO_TEMPLATE);
     cardsFragments.push(fragment);
   }

@@ -271,3 +271,11 @@ FORM.addEventListener(`change`, function (e) {
       break;
   }
 });
+
+FORM.querySelector(`.ad-form__submit`).addEventListener(`click`, function () {
+  const AD_ROOMS = FORM.querySelector(`#room_number`);
+  const AD_CAPACITY = FORM.querySelector(`#capacity`);
+  if (AD_ROOMS.value !== AD_CAPACITY.value) {
+    AD_CAPACITY.setCustomValidity(`Не соответствует ожидаемому значению`);
+  }
+});

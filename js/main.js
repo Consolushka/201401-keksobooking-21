@@ -230,6 +230,8 @@ FORM.addEventListener(`change`, function (e) {
   const AD_PRICE = FORM.querySelector(`#price`);
   const AD_TIMEIN = FORM.querySelector(`#timein`);
   const AD_TIMEOUT = FORM.querySelector(`#timeout`);
+  let capacityValue = FORM.querySelector(`#capacity`).value;
+  let roomsValue = FORM.querySelector(`#room_number`).value;
   // Сделано чтобы в будующем проверять и другие изменяющиеся поля
   switch (e.target.id) {
     case `room_number`:
@@ -243,8 +245,11 @@ FORM.addEventListener(`change`, function (e) {
       });
       break;
     case `capacity`:
-      if (AD_CAPACITY.value !== AD_ROOMS.value) {
+      if (capacityValue !== roomsValue) {
+        console.log(`change error`);
         AD_CAPACITY.setCustomValidity(`Не соответствует ожидаемому значению`);
+      } else {
+        AD_CAPACITY.setCustomValidity(``);
       }
       break;
     case `type`:
@@ -272,10 +277,14 @@ FORM.addEventListener(`change`, function (e) {
   }
 });
 
-FORM.querySelector(`.ad-form__submit`).addEventListener(`click`, function () {
-  const AD_ROOMS = FORM.querySelector(`#room_number`);
+FORM.addEventListener(`submit`, function (e) {
   const AD_CAPACITY = FORM.querySelector(`#capacity`);
-  if (AD_ROOMS.value !== AD_CAPACITY.value) {
-    AD_CAPACITY.setCustomValidity(`Не соответствует ожидаемому значению`);
+  let capacityValue = FORM.querySelector(`#capacity`).value;
+  let roomsValue = FORM.querySelector(`#room_number`).value;
+  console.log(capacityValue, roomsValue);
+  if (capacityValue !== roomsValue) {
+    AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
+    console.log(`error`);
+    e.preventDefault();
   }
 });

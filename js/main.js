@@ -24,6 +24,9 @@ const PIN_LOCATION_Y_START = 130;
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 const MAIN_PIN_AFTER_WIDTH = 10;
 const MAIN_PIN_AFTER_HEIGHT = 22;
+const AD_CAPACITY = FORM.querySelector(`#capacity`);
+let capacityValue = FORM.querySelector(`#capacity`).value;
+let roomsValue = FORM.querySelector(`#room_number`).value;
 let ads = [];
 let pins = [];
 let card;
@@ -56,6 +59,15 @@ function closeCardEsc(e) {
   }
 }
 
+function checkCapacity() {
+  console.log(`checking`);
+  console.log(capacityValue, roomsValue);
+  if (capacityValue !== roomsValue) {
+    AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
+    console.log(`error`);
+  }
+}
+
 function toggleInactiveState(isRemoving) {
   if (isRemoving) {
     MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
@@ -65,6 +77,7 @@ function toggleInactiveState(isRemoving) {
     FORM.classList.remove(`ad-form--disabled`);
     FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN_AFTER_WIDTH / 2};${MAIN_PIN.offsetLeft - MAIN_PIN_AFTER_HEIGHT / 2}`;
     loadOffers();
+    checkCapacity();
     pins = PIN_CONTAINER.querySelectorAll(`.map__pin`);
     pins.forEach(function (pin, i) {
       if (i !== 0) {
@@ -225,13 +238,10 @@ MAIN_PIN.addEventListener(`focus`, openMapEnter);
 
 FORM.addEventListener(`change`, function (e) {
   const AD_ROOMS = FORM.querySelector(`#room_number`);
-  const AD_CAPACITY = FORM.querySelector(`#capacity`);
   const AD_TYPE = FORM.querySelector(`#type`);
   const AD_PRICE = FORM.querySelector(`#price`);
   const AD_TIMEIN = FORM.querySelector(`#timein`);
   const AD_TIMEOUT = FORM.querySelector(`#timeout`);
-  let capacityValue = FORM.querySelector(`#capacity`).value;
-  let roomsValue = FORM.querySelector(`#room_number`).value;
   // Сделано чтобы в будующем проверять и другие изменяющиеся поля
   switch (e.target.id) {
     case `room_number`:
@@ -243,14 +253,6 @@ FORM.addEventListener(`change`, function (e) {
           option.removeAttribute(`disabled`);
         }
       });
-      break;
-    case `capacity`:
-      if (capacityValue !== roomsValue) {
-        console.log(`change error`);
-        AD_CAPACITY.setCustomValidity(`Не соответствует ожидаемому значению`);
-      } else {
-        AD_CAPACITY.setCustomValidity(``);
-      }
       break;
     case `type`:
       switch (AD_TYPE.value) {
@@ -278,13 +280,7 @@ FORM.addEventListener(`change`, function (e) {
 });
 
 FORM.addEventListener(`submit`, function (e) {
-  const AD_CAPACITY = FORM.querySelector(`#capacity`);
-  let capacityValue = FORM.querySelector(`#capacity`).value;
-  let roomsValue = FORM.querySelector(`#room_number`).value;
   console.log(capacityValue, roomsValue);
-  if (capacityValue !== roomsValue) {
-    AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
-    console.log(`error`);
-    e.preventDefault();
-  }
+  checkCapacity();
+  e.preventDefault();
 });

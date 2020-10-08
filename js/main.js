@@ -4,8 +4,6 @@ const MAP = document.querySelector(`.map`);
 const FORM = document.querySelector(`.ad-form`);
 const MAP_FILTERS = document.querySelector(`.map__filters`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
-let ads = [];
-let mainCard;
 
 function openMapClick(e) {
   if (e.button === 0) {
@@ -64,6 +62,6 @@ FORM.addEventListener(`change`, function (e) {
   window.formModule.checkingChanges(e);
 });
 
-FORM.addEventListener(`submit`, function (e) {
+FORM.addEventListener(`submit`, function () {
   window.formModule.checkCapacity();
 });

@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  window.utilModule = {START_CHECKIN: 12,
+  window.utilModule = {
+    START_CHECKIN: 12,
     OCLOCK: `:00`,
     PIN_WIDTH: 40,
     PIN_LOCATION_Y_START: 130,

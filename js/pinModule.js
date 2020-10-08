@@ -6,11 +6,11 @@
   let pinFragments = [];
   window.pinModule = {
     fillPinTemplate() {
-      for (let i = 0; i < ads.length; i++) {
+      for (let i = 0; i < window.dataModule.ads.length; i++) {
         let fragment = PIN_TEMPLATE.cloneNode(true);
-        fragment.setAttribute(`style`, `left: ${ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
-        fragment.querySelector(`img`).src = ads[i].author.avatar;
-        fragment.querySelector(`img`).alt = ads[i].offer.title;
+        fragment.setAttribute(`style`, `left: ${window.dataModule.ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${window.dataModule.ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
+        fragment.querySelector(`img`).src = window.dataModule.ads[i].author.avatar;
+        fragment.querySelector(`img`).alt = window.dataModule.ads[i].offer.title;
         pinFragments.push(fragment);
       }
     },

@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  const FORM = document.querySelector(`.ad-form`);
   window.formModule = {
     checkingChanges(e) {
       const AD_ROOMS = FORM.querySelector(`#room_number`);

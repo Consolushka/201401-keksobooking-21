@@ -3,7 +3,9 @@
 (function () {
   let photosArr;
   let featuresArr;
+  const MAP = document.querySelector(`.map`);
   window.dataModule = {
+    ads: [],
     ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
     ROOM_TYPE_TRANSLATER: {
       palace: `Дворец`,
@@ -39,7 +41,7 @@
             y: window.utilModule.PIN_LOCATION_Y_START + window.utilModule.getRandomInt(500)
           }
         };
-        ads.push(obj);
+        this.ads.push(obj);
       }
     }
   };

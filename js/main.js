@@ -6,7 +6,6 @@ const MAP_FILTERS = document.querySelector(`.map__filters`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 let ads = [];
 let mainCard;
-let pins = [];
 
 function openMapClick(e) {
   if (e.button === 0) {

@@ -8,12 +8,11 @@
 
   window.cardModule = {
     fillCard(ad) {
-      console.log(`filling`);
       mainCard.removeAttribute(`style`);
       mainCard.querySelector(`.popup__title`).textContent = ad.offer.title;
       mainCard.querySelector(`.popup__text--address`).textContent = ad.offer.address;
       mainCard.querySelector(`.popup__text--price`).textContent = `${ad.offer.price} ₽/ночь`;
-      mainCard.querySelector(`.popup__type`).textContent = `${window.utilModule.ROOM_TYPE_TRANSLATER[ad.offer.type]}`;
+      mainCard.querySelector(`.popup__type`).textContent = `${window.dataModule.ROOM_TYPE_TRANSLATER[ad.offer.type]}`;
       mainCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
       mainCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin}, выезд\t до ${ad.offer.checkout}`;
       mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
@@ -46,7 +45,6 @@
     },
     createCard() {
       let fragment = CARD_TEMPLATE.cloneNode(true);
-      console.log(`creation`);
       document.querySelector(`.map__filters-container`).insertAdjacentHTML(`beforebegin`, fragment.outerHTML);
       mainCard = document.querySelector(`.map__card`);
       mainCard.setAttribute(`style`, `display: none`);

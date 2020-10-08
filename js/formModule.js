@@ -20,12 +20,14 @@
             if (option.value === AD_ROOMS.value) {
               option.setAttribute(`selected`, ``);
               option.removeAttribute(`disabled`);
+            } else if (option.value === `0` && AD_ROOMS.value === `100`) {
+              option.setAttribute(`selected`, ``);
+              option.removeAttribute(`disabled`);
             }
           });
           break;
         case `capacity`:
           if (capacityValue === roomsValue) {
-            console.log(`fine`);
             AD_CAPACITY.setCustomValidity(``);
           }
           break;
@@ -57,11 +59,8 @@
       const AD_CAPACITY = FORM.querySelector(`#capacity`);
       let capacityValue = FORM.querySelector(`#capacity`).value;
       let roomsValue = FORM.querySelector(`#room_number`).value;
-      console.log(`checking`);
-      console.log(capacityValue, roomsValue);
       if (capacityValue !== roomsValue) {
         AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
-        console.log(`error`);
       }
     }
   };

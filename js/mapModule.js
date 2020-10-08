@@ -5,7 +5,6 @@
     addPinsListener() {
       const PIN_CONTAINER = document.querySelector(`.map__pins`);
       let pins = PIN_CONTAINER.querySelectorAll(`button`);
-      console.log(pins);
       pins.forEach(function (pinEl, i) {
         if (i !== 0) {
           pinEl.addEventListener(`click`, function () {

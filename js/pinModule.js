@@ -22,8 +22,6 @@
     loadPins() {
       this.fillPinTemplate();
       this.showPins();
-      pins = PIN_CONTAINER.querySelectorAll(`.map__pin`);
-      console.log(pins);
     }
   };
 }());

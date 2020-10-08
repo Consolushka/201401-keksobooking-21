@@ -4,6 +4,15 @@
   let photosArr;
   let featuresArr;
   window.dataModule = {
+    ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
+    ROOM_TYPE_TRANSLATER: {
+      palace: `Дворец`,
+      flat: `Квартира`,
+      house: `Дом`,
+      bungalow: `Бунгало`
+    },
+    FEATURES_LIST: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
+    PHOTOS_LIST: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
     fillOffers() {
       for (let i = 1; i <= 8; i++) {
         featuresArr = [];
@@ -16,14 +25,14 @@
             title: `Title${i}`,
             address: `${window.utilModule.getRandomInt(600)},${window.utilModule.getRandomInt(350)}`,
             price: window.utilModule.getRandomInt(1000),
-            type: window.utilModule.ROOM_TYPE[i % window.utilModule.ROOM_TYPE.length],
+            type: this.ROOM_TYPE[i % this.ROOM_TYPE.length],
             rooms: window.utilModule.getRandomInt(4) + 1,
             guests: window.utilModule.getRandomInt(3),
             checkin: `${window.utilModule.START_CHECKIN + window.utilModule.getRandomInt(2)}${window.utilModule.OCLOCK}`,
             checkout: `${window.utilModule.START_CHECKIN + window.utilModule.getRandomInt(2)}${window.utilModule.OCLOCK}`,
-            features: window.utilModule.getRandomArr(featuresArr, window.utilModule.FEATURES_LIST, window.utilModule.getRandomInt(window.utilModule.FEATURES_LIST.length), window.utilModule.FEATURES_LIST.length),
+            features: window.utilModule.getRandomArr(featuresArr, this.FEATURES_LIST, window.utilModule.getRandomInt(this.FEATURES_LIST.length), this.FEATURES_LIST.length),
             description: `desc${i}`,
-            photos: window.utilModule.getRandomArr(photosArr, window.utilModule.PHOTOS_LIST, window.utilModule.getRandomInt(window.utilModule.PHOTOS_LIST.length), window.utilModule.PHOTOS_LIST.length)
+            photos: window.utilModule.getRandomArr(photosArr, this.PHOTOS_LIST, window.utilModule.getRandomInt(this.PHOTOS_LIST.length), this.PHOTOS_LIST.length)
           },
           location: {
             x: window.utilModule.getRandomInt(MAP.offsetWidth - window.utilModule.PIN_WIDTH),

@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  const FORM = document.querySelector(`.ad-form`);
+  const MAIN_PIN = document.querySelector(`.map__pin--main`);
   window.utilModule = {
     START_CHECKIN: 12,
     OCLOCK: `:00`,
@@ -20,6 +22,9 @@
         this.getRandomArr(arr, plotArr, length, max);
       }
       return arr;
+    },
+    setAddress() {
+      FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - window.utilModule.MAIN_PIN_AFTER_WIDTH / 2};${MAIN_PIN.offsetTop - window.utilModule.MAIN_PIN_AFTER_HEIGHT / 2}`;
     }
   };
 }());

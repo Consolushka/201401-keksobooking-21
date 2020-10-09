@@ -24,10 +24,13 @@ function toggleInactiveState(isRemoving) {
   if (isRemoving) {
     MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
     MAIN_PIN.removeEventListener(`focus`, openMapEnter);
+    MAIN_PIN.addEventListener(`mousedown`, function (e) {
+      window.pinModule.mainPinDown(e);
+    });
     window.cardModule.createCard();
     MAP.classList.remove(`map--faded`);
     FORM.classList.remove(`ad-form--disabled`);
-    FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - window.utilModule.MAIN_PIN_AFTER_WIDTH / 2};${MAIN_PIN.offsetLeft - window.utilModule.MAIN_PIN_AFTER_HEIGHT / 2}`;
+    window.utilModule.setAddress();
     loadOffers();
     window.mapModule.addPinsListener();
     window.formModule.checkCapacity();

@@ -12,6 +12,7 @@
             window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeCardClick);
             document.addEventListener(`keydown`, window.cardModule.closeCardEsc);
           });
+          // TODO: Исправить callback hell
           pinEl.addEventListener(`focus`, function () {
             document.addEventListener(`keydown`, function (e) {
               if (e.key === `Enter`) {

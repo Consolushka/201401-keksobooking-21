@@ -24,7 +24,7 @@
       return arr;
     },
     setAddress() {
-      FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - window.utilModule.MAIN_PIN_AFTER_WIDTH / 2};${MAIN_PIN.offsetTop - window.utilModule.MAIN_PIN_AFTER_HEIGHT / 2}`;
+      FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft) + Math.trunc(MAIN_PIN.clientWidth / 2)};${MAIN_PIN.offsetTop + MAIN_PIN.clientHeight + this.MAIN_PIN_AFTER_HEIGHT}`;
     }
   };
 }());

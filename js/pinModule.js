@@ -8,7 +8,7 @@
 
   function listener(event) {
     let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
-    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < (MAP.clientHeight - 46))) {
+    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < (MAP.clientHeight - window.utilModule.MAIN_PIN_AFTER_HEIGHT - MAIN_PIN.clientHeight))) {
       MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
       window.utilModule.setAddress();
     }

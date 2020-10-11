@@ -27,12 +27,11 @@ function toggleInactiveState(isRemoving) {
     MAIN_PIN.addEventListener(`mousedown`, function (e) {
       window.pinModule.mainPinDown(e);
     });
+    window.dataModule.fillOffers();
     window.cardModule.createCard();
     MAP.classList.remove(`map--faded`);
     FORM.classList.remove(`ad-form--disabled`);
     window.utilModule.setAddress();
-    loadOffers();
-    window.mapModule.addPinsListener();
     window.formModule.checkCapacity();
   } else {
     FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
@@ -48,11 +47,6 @@ function toggleInactiveState(isRemoving) {
   MAP_FILTERS.querySelectorAll(`select`).forEach(function (field) {
     field.toggleAttribute(`disabled`);
   });
-}
-
-function loadOffers() {
-  window.dataModule.fillOffers();
-  window.pinModule.loadPins();
 }
 
 toggleInactiveState(false);

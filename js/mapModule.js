@@ -2,6 +2,7 @@
 
 (function () {
   window.mapModule = {
+    pinContainer: [],
     addPinsListener() {
       const PIN_CONTAINER = document.querySelector(`.map__pins`);
       let pins = PIN_CONTAINER.querySelectorAll(`button`);

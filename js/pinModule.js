@@ -33,6 +33,7 @@
       for (let i = 0; i < pinFragments.length; i++) {
         PIN_CONTAINER.appendChild(pinFragments[i]);
       }
+      window.mapModule.addPinsListener();
     },
     loadPins() {
       this.fillPinTemplate();

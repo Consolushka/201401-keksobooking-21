@@ -5,21 +5,22 @@
   const PIN_CONTAINER = document.querySelector(`.map__pins`);
   const MAIN_PIN = document.querySelector(`.map__pin--main`);
   const MAP = document.querySelector(`.map`);
-
-  function listener(event) {
+  let pinFragments = [];
+  function move(event) {
     let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
     if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < (MAP.clientHeight - window.utilModule.MAIN_PIN_AFTER_HEIGHT - MAIN_PIN.clientHeight))) {
       MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
       window.utilModule.setAddress();
     }
-    document.addEventListener(`mouseup`, function () {
-      document.removeEventListener(`mousemove`, listener);
-      window.utilModule.setAddress();
-    });
   }
-
-  let pinFragments = [];
   window.pinModule = {
+    listener() {
+      document.addEventListener(`mousemove`, move);
+      document.addEventListener(`mouseup`, function () {
+        document.removeEventListener(`mousemove`, move);
+        window.utilModule.setAddress();
+      });
+    },
     fillPinTemplate() {
       for (let i = 0; i < window.dataModule.ads.length; i++) {
         let fragment = PIN_TEMPLATE.cloneNode(true);
@@ -33,14 +34,29 @@
       for (let i = 0; i < pinFragments.length; i++) {
         PIN_CONTAINER.appendChild(pinFragments[i]);
       }
+      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, index) {
+        if (index !== 0) {
+          pin.classList.remove(`map__pin--hidden`);
+        }
+      });
       window.mapModule.addPinsListener();
+    },
+    resetMain() {
+      MAIN_PIN.setAttribute(`style`, `left: 570px; top: 375px;`);
+    },
+    hidePins() {
+      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, index) {
+        if (index !== 0) {
+          pin.classList.add(`map__pin--hidden`);
+        }
+      });
     },
     loadPins() {
       this.fillPinTemplate();
       this.showPins();
     },
     mainPinDown() {
-      document.addEventListener(`mousemove`, listener);
+      MAIN_PIN.addEventListener(`mousedown`, this.listener);
     }
   };
 }());

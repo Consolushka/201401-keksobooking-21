@@ -45,6 +45,10 @@
         wrapper.appendChild(element);
       }
     },
+    hideCard() {
+      this.mainCard.setAttribute(`style`, `display: none`);
+
+    },
     createCard() {
       let fragment = CARD_TEMPLATE.cloneNode(true);
       document.querySelector(`.map__filters-container`).insertAdjacentHTML(`beforebegin`, fragment.outerHTML);

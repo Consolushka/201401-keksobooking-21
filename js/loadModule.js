@@ -25,11 +25,9 @@
       onError(`Произошла ошибка соединения`);
     });
     xhr.addEventListener(`timeout`, function () {
-      console.log(`time`);
       onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
     });
 
-    xhr.open(`GET`, URL);
     xhr.send();
   };
 })();

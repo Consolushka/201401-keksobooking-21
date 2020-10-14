@@ -63,6 +63,39 @@
       if (capacityValue !== roomsValue) {
         AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
       }
+    },
+    submit(e) {
+      /*
+      console.log(new FormData(document.querySelector(`.ad-form`)));
+      ad = new FormData(FORM);
+       */
+      let ad = {};
+      ad[`author`] = {};
+      ad[`offer`] = {};
+      ad[`offer`][`features`] = [];
+      ad[`offer`][`photos`] = [];
+      ad[`location`] = {};
+      ad[`author`][`avatar`] = `asdasd`;
+      ad[`offer`][`title`] = FORM.querySelector(`#title`).value;
+      ad[`offer`][`checkin`] = FORM.querySelector(`#timein`).value;
+      ad[`offer`][`checkin`] = FORM.querySelector(`#timeout`).value;
+      ad[`offer`][`description`] = FORM.querySelector(`#description`).value;
+      ad[`offer`][`rooms`] = FORM.querySelector(`#room_number`).value;
+      ad[`offer`][`guests`] = FORM.querySelector(`#capacity`).value;
+      ad[`offer`][`address`] = FORM.querySelector(`#address`).value;
+      ad[`offer`][`price`] = FORM.querySelector(`#price`).value;
+      ad[`offer`][`type`] = FORM.querySelector(`#type`).value;
+      FORM.querySelector(`.features`).querySelectorAll(`input`).forEach(function (el) {
+        if (el.checked) {
+          ad[`offer`][`features`].push(el.value);
+        }
+      });
+      // TODO: Добавление фотографий
+      window.upload.send(ad, window.upload.createSuccess, window.upload.createError);
+      e.preventDefault();
+    },
+    clear() {
+      FORM.querySelector(`#title`).textContent = ``;
     }
   };
 }());

@@ -153,6 +153,10 @@ fieldset {
   background: none;
 }
 
+.map__pin--hidden{
+  display: none;
+}
+
 .map__pin:focus {
   outline: none;
   -webkit-filter: drop-shadow(0 0 5px red);
@@ -990,6 +994,23 @@ fieldset {
 
   border-radius: 5px;
   background-color: #ffffff;
+}
+
+.popup--error{
+  position: absolute;
+  background: #eeeeee;
+  z-index: 10;
+  text-align: center;
+  border-radius: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 60%;
+  padding: 20px;
+}
+
+.popup--hidden{
+  display: none;
 }
 
 .popup__avatar {

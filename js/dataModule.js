@@ -1,9 +1,24 @@
 'use strict';
 
 (function () {
-  let photosArr;
-  let featuresArr;
-  const MAP = document.querySelector(`.map`);
+
+  const ERROR_POPUP = document.querySelector(`.popup--error`);
+
+  function loading(loadedAds) {
+    for (let i = 0; i <= loadedAds.length - 1; i++) {
+      window.dataModule.ads.push(loadedAds[i]);
+    }
+    window.pinModule.loadPins();
+  }
+
+  function error(errorText) {
+    ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;
+    ERROR_POPUP.classList.remove(`popup--hidden`);
+    ERROR_POPUP.querySelector(`.popup__close`).addEventListener(`click`, function () {
+      ERROR_POPUP.classList.remove(`popup--hidden`);
+    });
+  }
+
   window.dataModule = {
     ads: [],
     ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
@@ -16,33 +31,7 @@
     FEATURES_LIST: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
     PHOTOS_LIST: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
     fillOffers() {
-      for (let i = 1; i <= 8; i++) {
-        featuresArr = [];
-        photosArr = [];
-        let obj = {
-          author: {
-            avatar: `img/avatars/user0${i}.png`
-          },
-          offer: {
-            title: `Title${i}`,
-            address: `${window.utilModule.getRandomInt(600)},${window.utilModule.getRandomInt(350)}`,
-            price: window.utilModule.getRandomInt(1000),
-            type: this.ROOM_TYPE[i % this.ROOM_TYPE.length],
-            rooms: window.utilModule.getRandomInt(4) + 1,
-            guests: window.utilModule.getRandomInt(3),
-            checkin: `${window.utilModule.START_CHECKIN + window.utilModule.getRandomInt(2)}${window.utilModule.OCLOCK}`,
-            checkout: `${window.utilModule.START_CHECKIN + window.utilModule.getRandomInt(2)}${window.utilModule.OCLOCK}`,
-            features: window.utilModule.getRandomArr(featuresArr, this.FEATURES_LIST, window.utilModule.getRandomInt(this.FEATURES_LIST.length), this.FEATURES_LIST.length),
-            description: `desc${i}`,
-            photos: window.utilModule.getRandomArr(photosArr, this.PHOTOS_LIST, window.utilModule.getRandomInt(this.PHOTOS_LIST.length), this.PHOTOS_LIST.length)
-          },
-          location: {
-            x: window.utilModule.getRandomInt(MAP.offsetWidth - window.utilModule.PIN_WIDTH),
-            y: window.utilModule.PIN_LOCATION_Y_START + window.utilModule.getRandomInt(500)
-          }
-        };
-        this.ads.push(obj);
-      }
+      window.loadModule(loading, error);
     }
   };
 }());

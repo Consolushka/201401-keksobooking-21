@@ -16,6 +16,12 @@ function openMapClick(e) {
     document.removeEventListener(`keydown`, openMapEnter);
   }
 }
+
+function submitForm(e) {
+  window.formModule.submit(e);
+  toggleInactiveState(false);
+}
+
 function openMapEnter() {
   window.pinModule.mainPinDown();
   document.addEventListener(`keydown`, function (e) {
@@ -35,8 +41,10 @@ function toggleInactiveState(isRemoving) {
     window.dataModule.fillOffers();
     window.utilModule.setAddress();
     window.formModule.checkCapacity();
+    FORM.addEventListener(`submit`, submitForm);
     FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
   } else {
+    window.formModule.clear();
     FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);

@@ -18,6 +18,7 @@
       }
     },
     filter(parameter, match) {
+      window.cardModule.hideCard();
       window.dataModule.ads.forEach(function (ad) {
         ad[`matched`] = 0;
         if (ad.offer[parameter] === match) {

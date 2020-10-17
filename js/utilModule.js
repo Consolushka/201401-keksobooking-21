@@ -12,6 +12,12 @@
     MAIN_PIN_AFTER_HEIGHT: 22,
     isReset: false,
     additional: true,
+    STATUS_CODE: {
+      OK: 200,
+      PAGE_NOT_FOUND: 404,
+      FORBIDDEN: 500,
+      INTERNAL_SERVER: 500,
+    },
     setAddress() {
       FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft) + Math.trunc(MAIN_PIN.clientWidth / 2)};${MAIN_PIN.offsetTop + MAIN_PIN.clientHeight + this.MAIN_PIN_AFTER_HEIGHT}`;
     }

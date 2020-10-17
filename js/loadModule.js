@@ -2,10 +2,6 @@
 
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  const STATUS_CODE = {
-    OK: 200,
-    TIMEOUT: 0
-  };
 
   window.loadModule = function (onSuccess, onError) {
     let xhr = new XMLHttpRequest();
@@ -14,13 +10,13 @@
     xhr.open(`GET`, URL);
 
     xhr.addEventListener(`load`, function () {
-      if (xhr.status === STATUS_CODE.OK) {
+      if (xhr.status === window.utilModule.STATUS_CODE.OK) {
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
       }
     });
-    xhr.timeout = STATUS_CODE.TIMEOUT;
+    xhr.timeout = window.utilModule.STATUS_CODE.TIMEOUT;
     xhr.addEventListener(`error`, function () {
       onError(`Произошла ошибка соединения`);
     });

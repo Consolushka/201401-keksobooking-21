@@ -38,18 +38,19 @@
     },
     send(message, onSuccess, onError) {
       let xhr = new XMLHttpRequest();
-      xhr.responseType = `json`;
-
-      xhr.addEventListener(`load`, function () {
-        onSuccess(xhr.response);
-      });
-
       xhr.open(`POST`, URL);
-      try {
-        xhr.send(message);
-      } catch (err) {
-        onError(err.message);
-      }
+
+      xhr.responseType = `json`;
+      xhr.setRequestHeader(`Content-Type`, `multipart/form-data`);
+      xhr.send(JSON.stringify(message));
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === window.utilModule.STATUS_CODE.OK) {
+          onSuccess();
+        } else {
+          onError();
+        }
+      };
     }
   };
 })();

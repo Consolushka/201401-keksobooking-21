@@ -1,7 +1,8 @@
 'use strict';
 
 const MAP = document.querySelector(`.map`);
-const FORM = document.querySelector(`.ad-form`);
+const SUBMIT_FORM = document.querySelector(`.ad-form`);
+const FILTER_FORM = document.querySelector(`.map__filters`);
 const MAP_FILTERS = document.querySelector(`.map__filters`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 
@@ -35,17 +36,18 @@ function openMapEnter() {
 function toggleInactiveState(isRemoving) {
   if (isRemoving) {
     MAP.classList.remove(`map--faded`);
-    FORM.classList.remove(`ad-form--disabled`);
+    SUBMIT_FORM.classList.remove(`ad-form--disabled`);
     MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
     MAIN_PIN.removeEventListener(`focus`, openMapEnter);
     window.dataModule.fillOffers();
     window.utilModule.setAddress();
     window.formModule.checkCapacity();
-    FORM.addEventListener(`submit`, submitForm);
-    FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
+    SUBMIT_FORM.addEventListener(`submit`, submitForm);
+    SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
+    FILTER_FORM.addEventListener(`change`, window.renderModule.change);
   } else {
     window.formModule.clear();
-    FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
+    SUBMIT_FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);
     window.pinModule.hidePins();
@@ -56,8 +58,8 @@ function toggleInactiveState(isRemoving) {
       window.cardModule.createCard();
     }
     MAP.classList.add(`map--faded`);
-    FORM.classList.add(`ad-form--disabled`);
-    FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
+    SUBMIT_FORM.classList.add(`ad-form--disabled`);
+    SUBMIT_FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);
     window.utilModule.isReset = true;
@@ -78,10 +80,10 @@ function toggleInactiveState(isRemoving) {
 
 toggleInactiveState(false);
 
-FORM.addEventListener(`change`, function (e) {
+SUBMIT_FORM.addEventListener(`change`, function (e) {
   window.formModule.checkingChanges(e);
 });
 
-FORM.addEventListener(`submit`, function () {
+SUBMIT_FORM.addEventListener(`submit`, function () {
   window.formModule.checkCapacity();
 });

@@ -12,7 +12,7 @@
         if (i !== 0) {
           i = i - window.mapModule.counter * 10;
           pinEl.addEventListener(`click`, function () {
-            window.cardModule.fillCard(window.dataModule.ads[i - 1]);
+            window.cardModule.fillCard(pinEl.dataset.index);
             window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeCardClick);
             document.addEventListener(`keydown`, window.cardModule.closeCardEsc);
             window.mapModule.counter++;

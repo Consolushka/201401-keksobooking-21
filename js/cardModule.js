@@ -8,7 +8,8 @@
 
   window.cardModule = {
     mainCard: document.querySelector(`.map__card`),
-    fillCard(ad) {
+    fillCard(index) {
+      let ad = window.dataModule.ads[index];
       this.mainCard.querySelector(`.popup__photos`).innerHTML = ``;
       this.mainCard.removeAttribute(`style`);
       this.mainCard.querySelector(`.popup__title`).textContent = ad.offer.title;

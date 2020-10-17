@@ -25,7 +25,6 @@
         }
       }
       function removeSuccessPopupClick() {
-        console.log(`oo`);
         document.querySelector(`main`).removeChild(popup);
         popup.querySelector(`.error__button`).removeEventListener(`click`, removeSuccessPopupClick);
         window.removeEventListener(`click`, removeSuccessPopupClick);
@@ -39,16 +38,19 @@
     },
     send(message, onSuccess, onError) {
       let xhr = new XMLHttpRequest();
+      xhr.open(`POST`, URL);
+
       xhr.responseType = `json`;
       xhr.setRequestHeader(`Content-Type`, `multipart/form-data`);
-
-      xhr.open(`POST`, URL);
       xhr.send(JSON.stringify(message));
 
-      switch (xhr.status) {
-        case window.utilModule.STATUS_CODE.OK: onSuccess(); break;
-        default: onError(); break;
-      }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === window.utilModule.STATUS_CODE.OK) {
+          onSuccess();
+        } else {
+          onError();
+        }
+      };
     }
   };
 })();

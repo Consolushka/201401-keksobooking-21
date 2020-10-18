@@ -21,6 +21,12 @@
       for (let i = 0; i <= loadedAds.length - 1; i++) {
         window.dataModule.ads.push(loadedAds[i]);
       }
+      window.dataModule.ads.forEach(function (ad) {
+        ad[`matched`] = 0;
+        ad[`matches`] = {
+          features: []
+        };
+      });
       window.pinModule.loadPins(5);
     },
     error(errorText) {

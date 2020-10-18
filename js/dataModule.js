@@ -27,7 +27,7 @@
           features: []
         };
       });
-      window.pinModule.loadPins(5);
+      window.pinModule.load(5);
     },
     error(errorText) {
       ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;

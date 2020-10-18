@@ -21,7 +21,7 @@
         window.utilModule.setAddress();
       });
     },
-    fillPinTemplate(count) {
+    fillTemplate(count) {
       pinFragments = [];
       for (let i = 0; i < count; i++) {
         if (window.dataModule.ads[i].offer) {
@@ -34,7 +34,7 @@
         }
       }
     },
-    showPins(count) {
+    show(count) {
       PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, i) {
         if (i > 0) {
           pin.parentNode.removeChild(pin);
@@ -53,18 +53,18 @@
     resetMain() {
       MAIN_PIN.setAttribute(`style`, `left: 570px; top: 375px;`);
     },
-    hidePins() {
+    hide() {
       PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, index) {
         if (index !== 0) {
           pin.classList.add(`map__pin--hidden`);
         }
       });
     },
-    loadPins(count) {
-      this.fillPinTemplate(count);
-      this.showPins(count);
+    load(count) {
+      this.fillTemplate(count);
+      this.show(count);
     },
-    mainPinDown() {
+    mainDown() {
       MAIN_PIN.addEventListener(`mousedown`, this.listener);
     }
   };

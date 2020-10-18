@@ -8,8 +8,8 @@
 
   window.cardModule = {
     mainCard: document.querySelector(`.map__card`),
-    fillCard(index) {
-      this.createCard();
+    fill(index) {
+      this.create();
       let ad = window.dataModule.ads[index];
       this.mainCard.querySelector(`.popup__photos`).innerHTML = ``;
       this.mainCard.removeAttribute(`style`);
@@ -37,8 +37,8 @@
           }
         }
       });
-      this.fillCardList(featuresWrapper, `features`, ad, null);
-      this.fillCardList(photosWrapper, `photos`, ad, CARD_PHOTO_TEMPLATE);
+      this.fillList(featuresWrapper, `features`, ad, null);
+      this.fillList(photosWrapper, `photos`, ad, CARD_PHOTO_TEMPLATE);
     },
     refactorLists(fragment) {
       featuresWrapper = fragment.querySelector(`.popup__features`);
@@ -48,7 +48,7 @@
         photosWrapper.removeChild(photosWrapper.querySelector(`.popup__photo`));
       }
     },
-    fillCardList(wrapper, objectKey, adItem, elementTemplate) {
+    fillList(wrapper, objectKey, adItem, elementTemplate) {
       for (let j = 0; j < adItem.offer[objectKey].length; j++) {
         let element;
         if (objectKey === `features`) {
@@ -61,21 +61,23 @@
         wrapper.appendChild(element);
       }
     },
-    hideCard() {
-      document.querySelector(`.map`).removeChild(document.querySelector(`.map__card`));
+    hide() {
+      if (document.querySelector(`.map`).querySelector(`.map__card`)) {
+        document.querySelector(`.map`).removeChild(document.querySelector(`.map__card`));
+      }
     },
-    createCard() {
+    create() {
       let fragment = CARD_TEMPLATE.cloneNode(true);
       document.querySelector(`.map__filters-container`).insertAdjacentHTML(`beforebegin`, fragment.outerHTML);
       this.mainCard = document.querySelector(`.map__card`);
       this.mainCard.setAttribute(`style`, `display: none`);
     },
-    closeCardEsc(e) {
+    closeEsc(e) {
       if (e.key === `Escape`) {
         window.cardModule.mainCard.setAttribute(`style`, `display: none`);
       }
     },
-    closeCardClick() {
+    closeClick() {
       window.cardModule.mainCard.setAttribute(`style`, `display: none`);
     }
   };

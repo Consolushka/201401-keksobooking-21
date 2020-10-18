@@ -11,7 +11,7 @@ function toggleState() {
 }
 
 function openMapClick(evt) {
-  window.pinModule.mainPinDown();
+  window.pinModule.mainDown();
   if (evt.button === 0) {
     toggleInactiveState(true);
     document.removeEventListener(`keydown`, openMapEnter);
@@ -24,7 +24,7 @@ function submitForm(evt) {
 }
 
 function openMapEnter() {
-  window.pinModule.mainPinDown();
+  window.pinModule.mainDown();
   document.addEventListener(`keydown`, function (e) {
     if (e.key === `Enter`) {
       toggleInactiveState(true);
@@ -45,14 +45,14 @@ function toggleInactiveState(isRemoving) {
     SUBMIT_FORM.addEventListener(`submit`, submitForm);
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
     FILTER_FORM.addEventListener(`change`, window.renderModule.change);
-    window.cardModule.createCard();
+    window.cardModule.create();
   } else {
     window.renderModule.removeFilters();
     window.formModule.clear();
     SUBMIT_FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);
-    window.pinModule.hidePins();
+    window.pinModule.hide();
     window.dataModule.ads = [];
     if (window.utilModule.isReset === true) {
       window.mapModule.resetAll();

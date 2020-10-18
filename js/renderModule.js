@@ -37,7 +37,7 @@
 
   function sortByParam(ads) {
     ads.sort((a, b) => a.matched < b.matched ? 1 : -1);
-    window.pinModule.loadPins(getCountOfAds(ads));
+    window.pinModule.load(getCountOfAds(ads));
   }
 
   function getTotalMatch(object) {
@@ -47,7 +47,7 @@
         if (object[`matches`][key].length === 0) {
           object[`matched`] += 1;
         } else {
-          object[`matched`] += object[`matches`][key].length;
+          object[`matched`] += object[`matches`][key].length + 1;
         }
       } else {
         object[`matched`] += object[`matches`][key];
@@ -75,7 +75,7 @@
       }
     },
     simpleFilter(parameter, match) {
-      window.cardModule.hideCard();
+      window.cardModule.hide();
       window.dataModule.ads.forEach(function (ad) {
         if (match === `any`) {
           ad[`matches`][parameter] = 1;
@@ -90,7 +90,7 @@
       sortByParam(window.dataModule.ads);
     },
     filterPrice(value) {
-      window.cardModule.hideCard();
+      window.cardModule.hide();
       window.dataModule.ads.forEach(function (ad) {
         ad[`matches`][`price`] = 0;
         if (value === `any`) {
@@ -104,7 +104,7 @@
       sortByParam(window.dataModule.ads);
     },
     filterFeatures(target) {
-      window.cardModule.hideCard();
+      window.cardModule.hide();
       window.dataModule.ads.forEach(function (ad) {
         ad.offer.features.forEach(function (feature) {
           if (feature === target.value) {

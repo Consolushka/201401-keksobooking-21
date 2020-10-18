@@ -8,7 +8,7 @@
   let pinFragments = [];
   function move(event) {
     let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
-    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < (MAP.clientHeight - window.utilModule.MAIN_PIN_AFTER_HEIGHT - MAIN_PIN.clientHeight))) {
+    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < 630) && (event.pageY > 130)) {
       MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
       window.utilModule.setAddress();
     }
@@ -24,12 +24,14 @@
     fillPinTemplate(count) {
       pinFragments = [];
       for (let i = 0; i < count; i++) {
-        let fragment = PIN_TEMPLATE.cloneNode(true);
-        fragment.setAttribute(`style`, `left: ${window.dataModule.ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${window.dataModule.ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
-        fragment.querySelector(`img`).src = window.dataModule.ads[i].author.avatar;
-        fragment.querySelector(`img`).alt = window.dataModule.ads[i].offer.title;
-        fragment.dataset.index = i;
-        pinFragments.push(fragment);
+        if (window.dataModule.ads[i].offer) {
+          let fragment = PIN_TEMPLATE.cloneNode(true);
+          fragment.setAttribute(`style`, `left: ${window.dataModule.ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${window.dataModule.ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
+          fragment.querySelector(`img`).src = window.dataModule.ads[i].author.avatar;
+          fragment.querySelector(`img`).alt = window.dataModule.ads[i].offer.title;
+          fragment.dataset.index = i;
+          pinFragments.push(fragment);
+        }
       }
     },
     showPins(count) {

@@ -1,39 +1,10 @@
 'use strict';
 
 (function () {
-  function getCountOfAds(arr) {
-    let count = 0;
-    arr.forEach(function (ad) {
-      if (count < 5) {
-        if (ad[`matched`] > 0) {
-          count++;
-        }
-      }
-    });
-    return count;
-  }
 
-  function sortByParam(arr) {
-    arr.sort((a, b) => a.matched < b.matched ? 1 : -1);
-    window.pinModule.loadPins(getCountOfAds(arr));
-  }
+  const FILTER_FORM = document.querySelector(`.map__filters`);
 
-  function getTotalMatch(object) {
-    object[`matched`] = 0;
-    Object.keys(object[`matches`]).forEach(function (key) {
-      if (key === `features`) {
-        if (object[`matches`][key].length === 0) {
-          object[`matched`] += 1;
-        } else {
-          object[`matched`] += object[`matches`][key].length;
-        }
-      } else {
-        object[`matched`] += object[`matches`][key];
-      }
-    });
-  }
-
-  const PRICES = {
+  const Prices = {
     any: {
       min: Number.NEGATIVE_INFINITY,
       max: Number.POSITIVE_INFINITY
@@ -51,23 +22,55 @@
       max: Number.POSITIVE_INFINITY
     }
   };
+
+  function getCountOfAds(ads) {
+    let count = 0;
+    ads.forEach(function (ad) {
+      if (count < 5) {
+        if (ad[`matched`] > 1) {
+          count++;
+        }
+      }
+    });
+    return count;
+  }
+
+  function sortByParam(ads) {
+    ads.sort((a, b) => a.matched < b.matched ? 1 : -1);
+    window.pinModule.loadPins(getCountOfAds(ads));
+  }
+
+  function getTotalMatch(object) {
+    object[`matched`] = 0;
+    Object.keys(object[`matches`]).forEach(function (key) {
+      if (key === `features`) {
+        if (object[`matches`][key].length === 0) {
+          object[`matched`] += 1;
+        } else {
+          object[`matched`] += object[`matches`][key].length;
+        }
+      } else {
+        object[`matched`] += object[`matches`][key];
+      }
+    });
+  }
   window.renderModule = {
-    change(e) {
-      switch (e.target.name) {
+    change(evt) {
+      switch (evt.target.name) {
         case `housing-type`:
-          window.debounce(window.renderModule.simpleFilter(`type`, e.target.value), 500);
+          window.debounce(window.renderModule.simpleFilter(`type`, evt.target.value), 500);
           break;
         case `housing-guests`:
-          window.renderModule.simpleFilter(`guests`, e.target.value);
+          window.renderModule.simpleFilter(`guests`, evt.target.value);
           break;
         case `housing-rooms`:
-          window.renderModule.simpleFilter(`rooms`, e.target.value);
+          window.renderModule.simpleFilter(`rooms`, evt.target.value);
           break;
         case `housing-price`:
-          window.renderModule.filterPrice(e.target.value);
+          window.renderModule.filterPrice(evt.target.value);
           break;
         case `features`:
-          window.debounce(window.renderModule.filterFeatures(e.target), 500);
+          window.debounce(window.renderModule.filterFeatures(evt.target), 500);
           break;
       }
     },
@@ -93,7 +96,7 @@
         if (value === `any`) {
           ad[`matches`][`price`] = 1;
         }
-        if (ad.offer.price >= PRICES[value].min && ad.offer.price <= PRICES[value].max) {
+        if (ad.offer.price >= Prices[value].min && ad.offer.price <= Prices[value].max) {
           ad[`matches`][`price`]++;
         }
         getTotalMatch(ad);
@@ -115,6 +118,16 @@
         getTotalMatch(ad);
       });
       sortByParam(window.dataModule.ads);
+    },
+    removeFilters() {
+      FILTER_FORM.querySelectorAll(`select`).forEach(function (select) {
+        select.selectedIndex = 0;
+      });
+      FILTER_FORM.querySelectorAll(`fieldset`).forEach(function (field) {
+        field.querySelectorAll(`input`).forEach(function (input) {
+          input.removeAttribute(`checked`);
+        });
+      });
     }
 
   };

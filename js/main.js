@@ -10,16 +10,16 @@ function toggleState() {
   toggleInactiveState(false);
 }
 
-function openMapClick(e) {
+function openMapClick(evt) {
   window.pinModule.mainPinDown();
-  if (e.button === 0) {
+  if (evt.button === 0) {
     toggleInactiveState(true);
     document.removeEventListener(`keydown`, openMapEnter);
   }
 }
 
-function submitForm(e) {
-  window.formModule.submit(e);
+function submitForm(evt) {
+  window.formModule.submit(evt);
   toggleInactiveState(false);
 }
 
@@ -45,7 +45,9 @@ function toggleInactiveState(isRemoving) {
     SUBMIT_FORM.addEventListener(`submit`, submitForm);
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
     FILTER_FORM.addEventListener(`change`, window.renderModule.change);
+    window.cardModule.createCard();
   } else {
+    window.renderModule.removeFilters();
     window.formModule.clear();
     SUBMIT_FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
@@ -54,9 +56,10 @@ function toggleInactiveState(isRemoving) {
     window.dataModule.ads = [];
     if (window.utilModule.isReset === true) {
       window.mapModule.resetAll();
-    } else {
-      window.cardModule.createCard();
     }
+    // else {
+    //   window.cardModule.createCard();
+    // }
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
     SUBMIT_FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
@@ -80,8 +83,8 @@ function toggleInactiveState(isRemoving) {
 
 toggleInactiveState(false);
 
-SUBMIT_FORM.addEventListener(`change`, function (e) {
-  window.formModule.checkingChanges(e);
+SUBMIT_FORM.addEventListener(`change`, function (evt) {
+  window.formModule.checkingChanges(evt);
 });
 
 SUBMIT_FORM.addEventListener(`submit`, function () {

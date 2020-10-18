@@ -6,7 +6,7 @@
   window.dataModule = {
     ads: [],
     ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
-    ROOM_TYPE_TRANSLATER: {
+    RoomTypeTranslator: {
       palace: `Дворец`,
       flat: `Квартира`,
       house: `Дом`,

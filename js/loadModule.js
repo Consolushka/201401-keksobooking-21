@@ -10,13 +10,13 @@
     xhr.open(`GET`, URL);
 
     xhr.addEventListener(`load`, function () {
-      if (xhr.status === window.utilModule.STATUS_CODE.OK) {
+      if (xhr.status === window.utilModule.StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
       }
     });
-    xhr.timeout = window.utilModule.STATUS_CODE.TIMEOUT;
+    xhr.timeout = window.utilModule.StatusCode.TIMEOUT;
     xhr.addEventListener(`error`, function () {
       onError(`Произошла ошибка соединения`);
     });

@@ -2,6 +2,8 @@
 
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking`;
+  const SUCCESS_TEMPLATE = document.querySelector(`#success`);
+  const ERROR_TEMPLATE = document.querySelector(`#error`);
 
   window.upload = {
     popup: ``,
@@ -12,14 +14,13 @@
           document.removeEventListener(`keydown`, removeSuccessPopup);
         }
       }
-      const TEMPLATE = document.querySelector(`#success`);
-      let popup = TEMPLATE.cloneNode(true).content.querySelector(`.success`);
+      let popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
       document.querySelector(`body`).appendChild(popup);
       document.addEventListener(`keydown`, removeSuccessPopup);
     },
     createError() {
-      function removeSuccessPopup(e) {
-        if (e.key === `Escape`) {
+      function removeSuccessPopup(evt) {
+        if (evt.key === `Escape`) {
           document.querySelector(`main`).removeChild(popup);
           document.removeEventListener(`keydown`, removeSuccessPopup);
         }
@@ -29,8 +30,7 @@
         popup.querySelector(`.error__button`).removeEventListener(`click`, removeSuccessPopupClick);
         window.removeEventListener(`click`, removeSuccessPopupClick);
       }
-      const TEMPLATE = document.querySelector(`#error`);
-      let popup = TEMPLATE.cloneNode(true).content.querySelector(`.error`);
+      let popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
       document.querySelector(`main`).appendChild(popup);
       document.addEventListener(`keydown`, removeSuccessPopup);
       popup.querySelector(`.error__button`).addEventListener(`click`, removeSuccessPopupClick);
@@ -45,7 +45,7 @@
       xhr.send(JSON.stringify(message));
 
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === window.utilModule.STATUS_CODE.OK) {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === window.utilModule.StatusCode.OK) {
           onSuccess();
         } else {
           onError();

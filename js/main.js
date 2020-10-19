@@ -44,7 +44,7 @@ function toggleInactiveState(isRemoving) {
     window.formModule.checkCapacity();
     SUBMIT_FORM.addEventListener(`submit`, submitForm);
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
-    FILTER_FORM.addEventListener(`change`, window.renderModule.change);
+    FILTER_FORM.addEventListener(`change`, window.debounce(window.renderModule.change));
     window.cardModule.create();
   } else {
     window.renderModule.removeFilters();

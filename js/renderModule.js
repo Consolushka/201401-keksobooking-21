@@ -27,7 +27,7 @@
     let count = 0;
     ads.forEach(function (ad) {
       if (count < 5) {
-        if (ad[`matched`] > 1) {
+        if (ad[`matched`] >= 1) {
           count++;
         }
       }
@@ -58,7 +58,7 @@
     change(evt) {
       switch (evt.target.name) {
         case `housing-type`:
-          window.debounce(window.renderModule.simpleFilter(`type`, evt.target.value), 500);
+          window.renderModule.simpleFilter(`type`, evt.target.value);
           break;
         case `housing-guests`:
           window.renderModule.simpleFilter(`guests`, evt.target.value);
@@ -70,7 +70,7 @@
           window.renderModule.filterPrice(evt.target.value);
           break;
         case `features`:
-          window.debounce(window.renderModule.filterFeatures(evt.target), 500);
+          window.renderModule.filterFeatures(evt.target);
           break;
       }
     },

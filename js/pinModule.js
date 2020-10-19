@@ -5,10 +5,12 @@
   const PIN_CONTAINER = document.querySelector(`.map__pins`);
   const MAIN_PIN = document.querySelector(`.map__pin--main`);
   const MAP = document.querySelector(`.map`);
+  const UPPER_BORDER = 130;
+  const LOWER_BORDER = 130;
   let pinFragments = [];
   function move(event) {
     let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
-    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < 630) && (event.pageY > 130)) {
+    if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < LOWER_BORDER) && (event.pageY > UPPER_BORDER)) {
       MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
       window.utilModule.setAddress();
     }

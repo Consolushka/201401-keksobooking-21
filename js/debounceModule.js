@@ -1,7 +1,7 @@
 'use strict';
 const DEBOUNCE_INTERVAL = 500; // ms
 
-window.debounce = function (cb) {
+window.debounceModule = function (cb) {
   let lastTimeout = null;
 
   return function (...args) {

@@ -1,5 +1,4 @@
 'use strict';
-
 const FORM = document.querySelector(`.ad-form`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 window.utilModule = {

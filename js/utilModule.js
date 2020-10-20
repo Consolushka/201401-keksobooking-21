@@ -12,7 +12,7 @@
     MAIN_PIN_AFTER_HEIGHT: 22,
     isReset: false,
     additional: true,
-    STATUS_CODE: {
+    StatusCode: {
       OK: 200,
       PAGE_NOT_FOUND: 404,
       FORBIDDEN: 500,

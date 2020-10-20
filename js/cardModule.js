@@ -8,22 +8,37 @@
 
   window.cardModule = {
     mainCard: document.querySelector(`.map__card`),
-    fillCard(index) {
+    fill(index) {
+      this.create();
       let ad = window.dataModule.ads[index];
       this.mainCard.querySelector(`.popup__photos`).innerHTML = ``;
       this.mainCard.removeAttribute(`style`);
       this.mainCard.querySelector(`.popup__title`).textContent = ad.offer.title;
       this.mainCard.querySelector(`.popup__text--address`).textContent = ad.offer.address;
       this.mainCard.querySelector(`.popup__text--price`).textContent = `${ad.offer.price} ₽/ночь`;
-      this.mainCard.querySelector(`.popup__type`).textContent = `${window.dataModule.ROOM_TYPE_TRANSLATER[ad.offer.type]}`;
+      this.mainCard.querySelector(`.popup__type`).textContent = `${window.dataModule.RoomTypeTranslator[ad.offer.type]}`;
       this.mainCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
       this.mainCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin}, выезд\t до ${ad.offer.checkout}`;
       this.mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
       this.mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
       this.mainCard.querySelector(`.popup__avatar`).src = ad.author.avatar;
       this.refactorLists(this.mainCard);
-      this.fillCardList(featuresWrapper, `features`, ad, null);
-      this.fillCardList(photosWrapper, `photos`, ad, CARD_PHOTO_TEMPLATE);
+      Object.keys(ad.offer).forEach(function (key) {
+        if (!ad.offer[key]) {
+          switch (key) {
+            case `rooms`:
+            case `guests`:
+              window.cardModule.mainCard.querySelector(`.popup__text--capacity`).setAttribute(`style`, `display: none`);
+              break;
+            default:
+              window.cardModule.mainCard.querySelector(`.popup__${key}`).setAttribute(`style`, `display: none`);
+              window.cardModule.mainCard.querySelector(`.popup__text--${key}`).setAttribute(`style`, `display: none`);
+              break;
+          }
+        }
+      });
+      this.fillList(featuresWrapper, `features`, ad, null);
+      this.fillList(photosWrapper, `photos`, ad, CARD_PHOTO_TEMPLATE);
     },
     refactorLists(fragment) {
       featuresWrapper = fragment.querySelector(`.popup__features`);
@@ -33,7 +48,7 @@
         photosWrapper.removeChild(photosWrapper.querySelector(`.popup__photo`));
       }
     },
-    fillCardList(wrapper, objectKey, adItem, elementTemplate) {
+    fillList(wrapper, objectKey, adItem, elementTemplate) {
       for (let j = 0; j < adItem.offer[objectKey].length; j++) {
         let element;
         if (objectKey === `features`) {
@@ -46,22 +61,23 @@
         wrapper.appendChild(element);
       }
     },
-    hideCard() {
-      this.mainCard.setAttribute(`style`, `display: none`);
-
+    hide() {
+      if (document.querySelector(`.map`).querySelector(`.map__card`)) {
+        document.querySelector(`.map`).removeChild(document.querySelector(`.map__card`));
+      }
     },
-    createCard() {
+    create() {
       let fragment = CARD_TEMPLATE.cloneNode(true);
       document.querySelector(`.map__filters-container`).insertAdjacentHTML(`beforebegin`, fragment.outerHTML);
       this.mainCard = document.querySelector(`.map__card`);
       this.mainCard.setAttribute(`style`, `display: none`);
     },
-    closeCardEsc(e) {
+    closeEsc(e) {
       if (e.key === `Escape`) {
         window.cardModule.mainCard.setAttribute(`style`, `display: none`);
       }
     },
-    closeCardClick() {
+    closeClick() {
       window.cardModule.mainCard.setAttribute(`style`, `display: none`);
     }
   };

@@ -10,21 +10,21 @@ function toggleState() {
   toggleInactiveState(false);
 }
 
-function openMapClick(e) {
-  window.pinModule.mainPinDown();
-  if (e.button === 0) {
+function openMapClick(evt) {
+  window.pinModule.mainDown();
+  if (evt.button === 0) {
     toggleInactiveState(true);
     document.removeEventListener(`keydown`, openMapEnter);
   }
 }
 
-function submitForm(e) {
-  window.formModule.submit(e);
+function submitForm(evt) {
+  window.formModule.submit(evt);
   toggleInactiveState(false);
 }
 
 function openMapEnter() {
-  window.pinModule.mainPinDown();
+  window.pinModule.mainDown();
   document.addEventListener(`keydown`, function (e) {
     if (e.key === `Enter`) {
       toggleInactiveState(true);
@@ -44,19 +44,22 @@ function toggleInactiveState(isRemoving) {
     window.formModule.checkCapacity();
     SUBMIT_FORM.addEventListener(`submit`, submitForm);
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
-    FILTER_FORM.addEventListener(`change`, window.renderModule.change);
+    FILTER_FORM.addEventListener(`change`, window.debounce(window.renderModule.change));
+    window.cardModule.create();
   } else {
+    window.renderModule.removeFilters();
     window.formModule.clear();
     SUBMIT_FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);
-    window.pinModule.hidePins();
+    window.pinModule.hide();
     window.dataModule.ads = [];
     if (window.utilModule.isReset === true) {
       window.mapModule.resetAll();
-    } else {
-      window.cardModule.createCard();
     }
+    // else {
+    //   window.cardModule.createCard();
+    // }
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
     SUBMIT_FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
@@ -80,8 +83,8 @@ function toggleInactiveState(isRemoving) {
 
 toggleInactiveState(false);
 
-SUBMIT_FORM.addEventListener(`change`, function (e) {
-  window.formModule.checkingChanges(e);
+SUBMIT_FORM.addEventListener(`change`, function (evt) {
+  window.formModule.checkingChanges(evt);
 });
 
 SUBMIT_FORM.addEventListener(`submit`, function () {

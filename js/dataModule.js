@@ -6,7 +6,7 @@
   window.dataModule = {
     ads: [],
     ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
-    ROOM_TYPE_TRANSLATER: {
+    RoomTypeTranslator: {
       palace: `Дворец`,
       flat: `Квартира`,
       house: `Дом`,
@@ -21,7 +21,13 @@
       for (let i = 0; i <= loadedAds.length - 1; i++) {
         window.dataModule.ads.push(loadedAds[i]);
       }
-      window.pinModule.loadPins(5);
+      window.dataModule.ads.forEach(function (ad) {
+        ad[`matched`] = 0;
+        ad[`matches`] = {
+          features: []
+        };
+      });
+      window.pinModule.load(5);
     },
     error(errorText) {
       ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;

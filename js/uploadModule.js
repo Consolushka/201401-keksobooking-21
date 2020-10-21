@@ -40,7 +40,6 @@ window.upload = {
     xhr.open(`POST`, URL);
 
     xhr.responseType = `json`;
-    xhr.setRequestHeader(`Content-Type`, `multipart/form-data`);
     xhr.send(JSON.stringify(message));
 
     xhr.onreadystatechange = function () {

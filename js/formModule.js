@@ -91,7 +91,7 @@ window.formModule = {
       }
     });
     // TODO: Добавление фотографий
-    window.upload.send(new FormData(e.target), window.upload.createSuccess, window.upload.createError);
+    window.upload.send(new FormData(e.target));
     e.preventDefault();
   },
   clear() {

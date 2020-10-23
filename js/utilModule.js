@@ -16,7 +16,8 @@ window.utilModule = {
     FORBIDDEN: 500,
     INTERNAL_SERVER: 500,
   },
+  FILE_TYPES: [`gif`, `jpg`, `jpeg`, `png`],
   setAddress() {
-    FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft) + Math.trunc(MAIN_PIN.clientWidth / 2)};${MAIN_PIN.offsetTop + MAIN_PIN.clientHeight + this.MAIN_PIN_AFTER_HEIGHT}`;
+    FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft) + Math.trunc(MAIN_PIN.clientWidth / 2)},${MAIN_PIN.offsetTop + MAIN_PIN.clientHeight + this.MAIN_PIN_AFTER_HEIGHT}`;
   }
 };

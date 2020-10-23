@@ -62,7 +62,7 @@ function toggleInactiveState(isRemoving) {
     // }
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
-    SUBMIT_FORM.querySelector(`#address`).value = `${MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2};${MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2}`;
+    SUBMIT_FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2)},${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2)}`;
     MAIN_PIN.addEventListener(`mousedown`, openMapClick);
     MAIN_PIN.addEventListener(`focus`, openMapEnter);
     window.utilModule.isReset = true;

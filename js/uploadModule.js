@@ -1,53 +1,51 @@
 'use strict';
 
-const URL = `https://21.javascript.pages.academy/keksobooking`;
-const SUCCESS_TEMPLATE = document.querySelector(`#success`);
-const ERROR_TEMPLATE = document.querySelector(`#error`);
+
+function removeSuccessPopup(e) {
+  if (e.key === `Escape`) {
+    document.querySelector(`main`).removeChild(window.upload.popup);
+    document.removeEventListener(`keydown`, removeSuccessPopup);
+  }
+}
+
+
+function removeSuccessPopupClick() {
+  document.querySelector(`main`).removeChild(window.upload.popup);
+  window.upload.popup.querySelector(`.error__button`).removeEventListener(`click`, removeSuccessPopupClick);
+  window.removeEventListener(`click`, removeSuccessPopupClick);
+}
 
 window.upload = {
   popup: ``,
   createSuccess() {
-    function removeSuccessPopup(e) {
-      if (e.key === `Escape`) {
-        document.querySelector(`body`).removeChild(popup);
-        document.removeEventListener(`keydown`, removeSuccessPopup);
-      }
-    }
-    let popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
-    document.querySelector(`body`).appendChild(popup);
+    const SUCCESS_TEMPLATE = document.querySelector(`#success`);
+    this.popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
+    document.querySelector(`main`).appendChild(this.popup);
     document.addEventListener(`keydown`, removeSuccessPopup);
   },
   createError() {
-    function removeSuccessPopup(evt) {
-      if (evt.key === `Escape`) {
-        document.querySelector(`main`).removeChild(popup);
-        document.removeEventListener(`keydown`, removeSuccessPopup);
-      }
-    }
-    function removeSuccessPopupClick() {
-      document.querySelector(`main`).removeChild(popup);
-      popup.querySelector(`.error__button`).removeEventListener(`click`, removeSuccessPopupClick);
-      window.removeEventListener(`click`, removeSuccessPopupClick);
-    }
-    let popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
-    document.querySelector(`main`).appendChild(popup);
+    const ERROR_TEMPLATE = document.querySelector(`#error`);
+    this.popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
+    document.querySelector(`main`).appendChild(this.popup);
     document.addEventListener(`keydown`, removeSuccessPopup);
-    popup.querySelector(`.error__button`).addEventListener(`click`, removeSuccessPopupClick);
+    this.popup.querySelector(`.error__button`).addEventListener(`click`, removeSuccessPopupClick);
     window.addEventListener(`click`, removeSuccessPopupClick);
   },
-  send(message, onSuccess, onError) {
+  send(message) {
+    const URL = `https://21.javascript.pages.academy/keksobooking`;
     let xhr = new XMLHttpRequest();
     xhr.open(`POST`, URL);
 
     xhr.responseType = `json`;
-    xhr.setRequestHeader(`Content-Type`, `multipart/form-data`);
-    xhr.send(JSON.stringify(message));
+    xhr.send(message);
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === window.utilModule.StatusCode.OK) {
-        onSuccess();
-      } else {
-        onError();
+      if (this.readyState === 4) {
+        if (xhr.status === window.utilModule.StatusCode.OK) {
+          window.upload.createSuccess();
+        } else {
+          window.upload.createError();
+        }
       }
     };
   }

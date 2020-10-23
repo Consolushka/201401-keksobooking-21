@@ -56,6 +56,12 @@ window.formModule = {
       case `timeout`:
         AD_TIMEIN.value = AD_TIMEOUT.value;
         break;
+      case `images`:
+        window.filesModule.adPhoto(evt.target);
+        break;
+      case `avatar`:
+        window.filesModule.adAvatar(evt.target);
+        break;
     }
   },
   checkCapacity() {
@@ -85,10 +91,12 @@ window.formModule = {
       }
     });
     // TODO: Добавление фотографий
-    window.upload.send(ad, window.upload.createSuccess, window.upload.createError);
+    window.upload.send(new FormData(e.target));
     e.preventDefault();
   },
   clear() {
-    FORM.querySelector(`#title`).textContent = ``;
+    FORM.reset();
+    document.querySelector(`.ad-form-header__preview`).querySelector(`img`).src = `img/muffin-grey.svg`;
+    FORM.querySelector(`.ad-form__photo`).innerHTML = ``;
   }
 };

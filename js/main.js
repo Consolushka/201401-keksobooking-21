@@ -39,6 +39,7 @@ function toggleInactiveState(isRemoving) {
     SUBMIT_FORM.classList.remove(`ad-form--disabled`);
     MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
     MAIN_PIN.removeEventListener(`focus`, openMapEnter);
+    MAIN_PIN.addEventListener(`mousedown`, window.pinModule.listener);
     window.dataModule.fillOffers();
     window.utilModule.setAddress();
     window.formModule.checkCapacity();
@@ -85,6 +86,17 @@ toggleInactiveState(false);
 
 SUBMIT_FORM.addEventListener(`change`, function (evt) {
   window.formModule.checkingChanges(evt);
+});
+
+FILTER_FORM.querySelectorAll(`.map__checkbox`).forEach(function (checkbox) {
+  checkbox.addEventListener(`focus`, function (check) {
+    checkbox.addEventListener(`keydown`, function (evt) {
+      if (evt.key === `Enter`) {
+        checkbox.setAttribute(`checked`, ``);
+        window.renderModule.change(check);
+      }
+    });
+  });
 });
 
 SUBMIT_FORM.addEventListener(`submit`, function () {

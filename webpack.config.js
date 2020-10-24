@@ -2,17 +2,17 @@ const path = require("path");
 
 module.exports = {
   entry: [
-    "./js/cardModule.js",
+    "./js/utilModule.js",
+    "./js/loadModule.js",
     "./js/dataModule.js",
+    "./js/pinModule.js",
     "./js/debounceModule.js",
+    "./js/renderModule.js",
+    "./js/cardModule.js",
     "./js/formModule.js",
     "./js/fileModule.js",
-    "./js/loadModule.js",
-    "./js/mapModule.js",
-    "./js/pinModule.js",
-    "./js/renderModule.js",
     "./js/uploadModule.js",
-    "./js/utilModule.js",
+    "./js/mapModule.js",
     "./js/main.js",
   ],
   output: {

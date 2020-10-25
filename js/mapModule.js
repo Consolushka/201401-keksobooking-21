@@ -6,6 +6,9 @@
   function openCardClick(evt) {
     window.cardModule.hide();
     let pinEl = evt.target.parentElement;
+    if (evt.target.tagName.toLowerCase() === `button`) {
+      pinEl = evt.target;
+    }
     document.removeEventListener(`keydown`, openCardEnter);
     window.mapModule.pins.forEach(function (pin) {
       pin.classList.remove(`map__pin--active`);
@@ -14,7 +17,6 @@
     window.cardModule.fill(pinEl.dataset.index);
     window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeClick);
     document.addEventListener(`keydown`, window.cardModule.closeEsc);
-    window.mapModule.counter++;
   }
 
   function openCardEnter(evt) {
@@ -25,7 +27,6 @@
       window.cardModule.fill(pinEl.dataset.index);
       window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeClick);
       window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`focus`, window.cardModule.closeEsc);
-      window.mapModule.counter++;
     }
     document.removeEventListener(`keydown`, openCardEnter);
   }
@@ -33,7 +34,6 @@
   window.mapModule = {
     pinContainer: [],
     pins: ``,
-    counter: 0,
     addPinsListener() {
       this.pins = PIN_CONTAINER.querySelectorAll(`button`);
       for (let i = 1; i < this.pins.length; i++) {

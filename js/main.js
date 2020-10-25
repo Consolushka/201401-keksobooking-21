@@ -10,25 +10,30 @@ function toggleState() {
   toggleInactiveState(false);
 }
 
+function openMap() {
+  toggleInactiveState(true);
+  document.removeEventListener(`keydown`, openMapEnter);
+  MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
+}
+
 function openMapClick(evt) {
   window.pinModule.mainDown();
   if (evt.button === 0) {
-    toggleInactiveState(true);
-    document.removeEventListener(`keydown`, openMapEnter);
+    openMap();
   }
 }
 
 function submitForm(evt) {
   window.formModule.submit(evt);
   toggleInactiveState(false);
+  SUBMIT_FORM.removeEventListener(`submit`, submitForm);
 }
 
 function openMapEnter() {
   window.pinModule.mainDown();
   document.addEventListener(`keydown`, function (e) {
     if (e.key === `Enter`) {
-      toggleInactiveState(true);
-      MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
+      openMap();
     }
   });
 }
@@ -47,20 +52,34 @@ function toggleInactiveState(isRemoving) {
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
     FILTER_FORM.addEventListener(`change`, window.debounceModule(window.renderModule.change));
     window.cardModule.create();
+
+    SUBMIT_FORM.addEventListener(`change`, function (evt) {
+      window.formModule.checkingChanges(evt);
+    });
+
+    FILTER_FORM.querySelectorAll(`.map__checkbox`).forEach(function (checkbox) {
+      checkbox.addEventListener(`focus`, function (check) {
+        checkbox.addEventListener(`keydown`, function (evt) {
+          if (evt.key === `Enter`) {
+            checkbox.toggleAttribute(`checked`);
+            window.renderModule.change(check);
+          }
+        });
+      });
+    });
+
+    SUBMIT_FORM.addEventListener(`submit`, function () {
+      window.formModule.checkCapacity();
+    });
   } else {
     window.renderModule.removeFilters();
     window.formModule.clear();
     SUBMIT_FORM.querySelector(`.ad-form__reset`).removeEventListener(`click`, toggleState);
-    MAIN_PIN.addEventListener(`mousedown`, openMapClick);
-    MAIN_PIN.addEventListener(`focus`, openMapEnter);
     window.pinModule.hide();
     window.dataModule.ads = [];
-    if (window.utilModule.isReset === true) {
+    if (window.utilModule.isReset) {
       window.mapModule.resetAll();
     }
-    // else {
-    //   window.cardModule.createCard();
-    // }
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
     SUBMIT_FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2)},${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2)}`;
@@ -83,22 +102,3 @@ function toggleInactiveState(isRemoving) {
 }
 
 toggleInactiveState(false);
-
-SUBMIT_FORM.addEventListener(`change`, function (evt) {
-  window.formModule.checkingChanges(evt);
-});
-
-FILTER_FORM.querySelectorAll(`.map__checkbox`).forEach(function (checkbox) {
-  checkbox.addEventListener(`focus`, function (check) {
-    checkbox.addEventListener(`keydown`, function (evt) {
-      if (evt.key === `Enter`) {
-        checkbox.setAttribute(`checked`, ``);
-        window.renderModule.change(check);
-      }
-    });
-  });
-});
-
-SUBMIT_FORM.addEventListener(`submit`, function () {
-  window.formModule.checkCapacity();
-});

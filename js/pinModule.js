@@ -17,6 +17,7 @@
   }
   window.pinModule = {
     listener() {
+      MAIN_PIN.removeEventListener(`mousedown`, window.pinModule.listener);
       document.addEventListener(`mousemove`, move);
       document.addEventListener(`mouseup`, function () {
         document.removeEventListener(`mousemove`, move);

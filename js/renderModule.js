@@ -69,7 +69,7 @@
           window.renderModule.filterPrice(evt.target.value);
           break;
         case `features`:
-          evt.target.setAttribute(`checked`, ``);
+          evt.target.toggleAttribute(`checked`);
           window.renderModule.filterFeatures(evt.target);
           break;
       }

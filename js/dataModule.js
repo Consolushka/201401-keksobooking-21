@@ -2,21 +2,22 @@
 
 (function () {
   const ERROR_POPUP = document.querySelector(`.popup--error`);
+  function closeErr() {
+    ERROR_POPUP.classList.add(`popup--hidden`);
+    ERROR_POPUP.querySelector(`.popup__close`).removeEventListener(`click`, closeErr);
+  }
   window.dataModule = {
     ads: [],
-    ROOM_TYPE: [`palace`, `flat`, `house`, `bungalow`],
-    RoomTypeTranslator: {
+    roomTypeTranslator: {
       palace: `Дворец`,
       flat: `Квартира`,
       house: `Дом`,
       bungalow: `Бунгало`
     },
-    FEATURES_LIST: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-    PHOTOS_LIST: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
     fillOffers() {
-      window.loadModule(window.dataModule.loading, window.dataModule.error);
+      window.loadModule(window.dataModule.load, window.dataModule.error);
     },
-    loading(loadedAds) {
+    load(loadedAds) {
       for (let i = 0; i <= loadedAds.length - 1; i++) {
         window.dataModule.ads.push(loadedAds[i]);
       }
@@ -31,9 +32,7 @@
     error(errorText) {
       ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;
       ERROR_POPUP.classList.remove(`popup--hidden`);
-      ERROR_POPUP.querySelector(`.popup__close`).addEventListener(`click`, function () {
-        ERROR_POPUP.classList.remove(`popup--hidden`);
-      });
+      ERROR_POPUP.querySelector(`.popup__close`).addEventListener(`click`, closeErr);
     }
   };
 

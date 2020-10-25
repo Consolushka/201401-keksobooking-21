@@ -12,7 +12,6 @@
     checkingChanges(evt) {
       let capacityValue = FORM.querySelector(`#capacity`).value;
       let roomsValue = FORM.querySelector(`#room_number`).value;
-      // Сделано чтобы в будующем проверять и другие изменяющиеся поля
       switch (evt.target.id) {
         case `room_number`:
           AD_CAPACITY.querySelectorAll(`option`).forEach(function (option) {

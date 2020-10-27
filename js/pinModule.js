@@ -8,7 +8,7 @@
   const UPPER_BORDER = 130;
   const LOWER_BORDER = 630;
   let pinFragments = [];
-  function move(event) {
+  function onMainpinMove(event) {
     let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
     if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < LOWER_BORDER) && (event.pageY > UPPER_BORDER)) {
       MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
@@ -16,11 +16,10 @@
     }
   }
   window.pinModule = {
-    listener() {
-      MAIN_PIN.removeEventListener(`mousedown`, window.pinModule.listener);
-      document.addEventListener(`mousemove`, move);
+    onMainpinDown() {
+      document.addEventListener(`mousemove`, onMainpinMove);
       document.addEventListener(`mouseup`, function () {
-        document.removeEventListener(`mousemove`, move);
+        document.removeEventListener(`mousemove`, onMainpinMove);
         window.utilModule.setAddress();
       });
     },
@@ -68,7 +67,7 @@
       this.show(count);
     },
     mainDown() {
-      MAIN_PIN.addEventListener(`mousedown`, this.listener);
+      MAIN_PIN.addEventListener(`mousedown`, this.onMainpinDown);
     }
   };
 })();

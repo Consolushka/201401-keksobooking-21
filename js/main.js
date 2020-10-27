@@ -12,11 +12,11 @@ function toggleState() {
 
 function openMap() {
   toggleInactiveState(true);
-  document.removeEventListener(`keydown`, openMapEnter);
-  MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
+  document.removeEventListener(`keydown`, onMainpinEnter);
+  MAIN_PIN.removeEventListener(`mousedown`, onMainpinClick);
 }
 
-function openMapClick(evt) {
+function onMainpinClick(evt) {
   window.pinModule.mainDown();
   if (evt.button === 0) {
     openMap();
@@ -29,7 +29,7 @@ function submitForm(evt) {
   SUBMIT_FORM.removeEventListener(`submit`, submitForm);
 }
 
-function openMapEnter() {
+function onMainpinEnter() {
   window.pinModule.mainDown();
   document.addEventListener(`keydown`, function (e) {
     if (e.key === `Enter`) {
@@ -42,9 +42,9 @@ function toggleInactiveState(isRemoving) {
   if (isRemoving) {
     MAP.classList.remove(`map--faded`);
     SUBMIT_FORM.classList.remove(`ad-form--disabled`);
-    MAIN_PIN.removeEventListener(`mousedown`, openMapClick);
-    MAIN_PIN.removeEventListener(`focus`, openMapEnter);
-    MAIN_PIN.addEventListener(`mousedown`, window.pinModule.listener);
+    MAIN_PIN.removeEventListener(`mousedown`, onMainpinClick);
+    MAIN_PIN.removeEventListener(`focus`, onMainpinEnter);
+    window.pinModule.mainDown();
     window.dataModule.fillOffers();
     window.utilModule.setAddress();
     window.formModule.checkCapacity();
@@ -83,10 +83,10 @@ function toggleInactiveState(isRemoving) {
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
     SUBMIT_FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2)},${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2)}`;
-    MAIN_PIN.addEventListener(`mousedown`, openMapClick);
-    MAIN_PIN.addEventListener(`focus`, openMapEnter);
+    MAIN_PIN.addEventListener(`mousedown`, onMainpinClick);
+    MAIN_PIN.addEventListener(`focus`, onMainpinEnter);
     window.utilModule.isReset = true;
-    document.removeEventListener(`mousemove`, window.pinModule.listener);
+    document.removeEventListener(`mousemove`, window.pinModule.onMainpinDown);
   }
   document.querySelector(`.notice`).querySelectorAll(`fieldset`).forEach(function (field) {
     field.toggleAttribute(`disabled`);

@@ -2,17 +2,17 @@
 
 (function () {
   const ERROR_POPUP = document.querySelector(`.popup--error`);
-  function closeErr() {
+  function onCloseClick() {
     ERROR_POPUP.classList.add(`popup--hidden`);
-    ERROR_POPUP.querySelector(`.popup__close`).removeEventListener(`click`, closeErr);
+    ERROR_POPUP.querySelector(`.popup__close`).removeEventListener(`click`, onCloseClick);
   }
   window.dataModule = {
     ads: [],
     roomTypeTranslator: {
-      palace: `Дворец`,
-      flat: `Квартира`,
-      house: `Дом`,
-      bungalow: `Бунгало`
+      PALACE: `Дворец`,
+      FLAT: `Квартира`,
+      HOUSE: `Дом`,
+      BUNGALOW: `Бунгало`
     },
     fillOffers() {
       window.loadModule(window.dataModule.load, window.dataModule.error);
@@ -32,7 +32,7 @@
     error(errorText) {
       ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;
       ERROR_POPUP.classList.remove(`popup--hidden`);
-      ERROR_POPUP.querySelector(`.popup__close`).addEventListener(`click`, closeErr);
+      ERROR_POPUP.querySelector(`.popup__close`).addEventListener(`click`, onCloseClick);
     }
   };
 

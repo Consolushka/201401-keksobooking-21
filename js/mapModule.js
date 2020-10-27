@@ -10,7 +10,7 @@
       pinEl = evt.target;
     }
     document.removeEventListener(`keydown`, onPinEnter);
-    window.mapModule.pins.forEach(function (pin) {
+    window.mapModule.pins.forEach((pin)=> {
       pin.classList.remove(`map__pin--active`);
     });
     pinEl.classList.add(`map__pin--active`);
@@ -39,7 +39,7 @@
       for (let i = 1; i < this.pins.length; i++) {
         this.pins[i].addEventListener(`click`, onPinClick);
         // TODO: Исправить callback hell
-        this.pins[i].addEventListener(`focus`, function () {
+        this.pins[i].addEventListener(`focus`, ()=> {
           document.addEventListener(`keydown`, onPinEnter);
         });
       }

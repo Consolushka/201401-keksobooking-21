@@ -24,15 +24,15 @@
       this.mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
       this.mainCard.querySelector(`.popup__avatar`).src = ad.author.avatar;
       this.refactorLists(this.mainCard);
-      Object.keys(ad.offer).forEach(function (key) {
+      Object.keys(ad.offer).forEach((key)=> {
         if (ad.offer[key].length === 0) {
           switch (key) {
             case `rooms`:
             case `guests`:
-              window.cardModule.mainCard.querySelector(`.popup__text--capacity`).setAttribute(`style`, `display: none`);
+              this.mainCard.querySelector(`.popup__text--capacity`).setAttribute(`style`, `display: none`);
               break;
             default:
-              window.cardModule.mainCard.querySelector(`.popup__${key}`).setAttribute(`style`, `display: none`);
+              this.mainCard.querySelector(`.popup__${key}`).setAttribute(`style`, `display: none`);
               break;
           }
         }

@@ -53,13 +53,13 @@ function toggleInactiveState(isRemoving) {
     FILTER_FORM.addEventListener(`change`, window.debounceModule(window.renderModule.change));
     window.cardModule.create();
 
-    SUBMIT_FORM.addEventListener(`change`, function (evt) {
+    SUBMIT_FORM.addEventListener(`change`, (evt)=> {
       window.formModule.checkingChanges(evt);
     });
 
-    FILTER_FORM.querySelectorAll(`.map__checkbox`).forEach(function (checkbox) {
-      checkbox.addEventListener(`focus`, function (check) {
-        checkbox.addEventListener(`keydown`, function (evt) {
+    FILTER_FORM.querySelectorAll(`.map__checkbox`).forEach((checkbox)=> {
+      checkbox.addEventListener(`focus`, (check)=> {
+        checkbox.addEventListener(`keydown`, (evt)=> {
           if (evt.key === `Enter`) {
             checkbox.toggleAttribute(`checked`);
             window.renderModule.change(check);
@@ -68,7 +68,7 @@ function toggleInactiveState(isRemoving) {
       });
     });
 
-    SUBMIT_FORM.addEventListener(`submit`, function () {
+    SUBMIT_FORM.addEventListener(`submit`, ()=> {
       window.formModule.checkCapacity();
     });
   } else {
@@ -88,7 +88,7 @@ function toggleInactiveState(isRemoving) {
     window.utilModule.isReset = true;
     document.removeEventListener(`mousemove`, window.pinModule.onMainpinDown);
   }
-  document.querySelector(`.notice`).querySelectorAll(`fieldset`).forEach(function (field) {
+  document.querySelector(`.notice`).querySelectorAll(`fieldset`).forEach((field)=> {
     field.toggleAttribute(`disabled`);
   });
 
@@ -96,7 +96,7 @@ function toggleInactiveState(isRemoving) {
 
   MAP_FILTERS.classList.toggle(`map__filters--disabled`);
 
-  MAP_FILTERS.querySelectorAll(`select`).forEach(function (field) {
+  MAP_FILTERS.querySelectorAll(`select`).forEach((field)=> {
     field.toggleAttribute(`disabled`);
   });
 }

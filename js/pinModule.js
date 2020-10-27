@@ -18,7 +18,7 @@
   window.pinModule = {
     onMainpinDown() {
       document.addEventListener(`mousemove`, onMainpinMove);
-      document.addEventListener(`mouseup`, function () {
+      document.addEventListener(`mouseup`, ()=> {
         document.removeEventListener(`mousemove`, onMainpinMove);
         window.utilModule.setAddress();
       });
@@ -37,7 +37,7 @@
       }
     },
     show(count) {
-      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, i) {
+      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach((pin, i)=> {
         if (i > 0) {
           pin.parentNode.removeChild(pin);
         }
@@ -45,7 +45,7 @@
       for (let i = 0; i < count; i++) {
         PIN_CONTAINER.appendChild(pinFragments[i]);
       }
-      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, index) {
+      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach((pin, index)=> {
         if (index !== 0) {
           pin.classList.remove(`map__pin--hidden`);
         }
@@ -56,7 +56,7 @@
       MAIN_PIN.setAttribute(`style`, `left: 570px; top: 375px;`);
     },
     hide() {
-      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach(function (pin, index) {
+      PIN_CONTAINER.querySelectorAll(`.map__pin`).forEach((pin, index)=> {
         if (index !== 0) {
           pin.classList.add(`map__pin--hidden`);
         }

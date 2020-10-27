@@ -76,7 +76,7 @@
     },
     simpleFilter(parameter, match) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
+      window.dataModule.ads.forEach((ad)=> {
         if (match === `any`) {
           ad[`matches`][parameter] = 1;
         } else {
@@ -91,7 +91,7 @@
     },
     filterPrice(value) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
+      window.dataModule.ads.forEach((ad)=> {
         ad[`matches`][`price`] = 0;
         if (value === `any`) {
           ad[`matches`][`price`] = 1;
@@ -105,8 +105,8 @@
     },
     filterFeatures(target) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
-        ad.offer.features.forEach(function (feature) {
+      window.dataModule.ads.forEach((ad)=> {
+        ad.offer.features.forEach((feature)=> {
           if (feature === target.value) {
             if (target.checked) {
               ad[`matches`][`features`].push(feature);
@@ -121,8 +121,8 @@
     },
     removeFilters() {
       FILTER_FORM.reset();
-      FILTER_FORM.querySelectorAll(`fieldset`).forEach(function (field) {
-        field.querySelectorAll(`input`).forEach(function (input) {
+      FILTER_FORM.querySelectorAll(`fieldset`).forEach((field)=> {
+        field.querySelectorAll(`input`).forEach((input)=> {
           input.removeAttribute(`checked`);
         });
       });

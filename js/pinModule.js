@@ -23,14 +23,14 @@
         window.utilModule.setAddress();
       });
     },
-    fillTemplate(count) {
+    fillTemplate(count, ads) {
       pinFragments = [];
       for (let i = 0; i < count; i++) {
-        if (window.dataModule.ads[i].offer) {
+        if (ads[i].offer) {
           let fragment = PIN_TEMPLATE.cloneNode(true);
-          fragment.setAttribute(`style`, `left: ${window.dataModule.ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${window.dataModule.ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
-          fragment.querySelector(`img`).src = window.dataModule.ads[i].author.avatar;
-          fragment.querySelector(`img`).alt = window.dataModule.ads[i].offer.title;
+          fragment.setAttribute(`style`, `left: ${ads[i].location.x + window.utilModule.PIN_WIDTH / 2}px; top: ${ads[i].location.y + window.utilModule.PIN_WIDTH / 2}px`);
+          fragment.querySelector(`img`).src = ads[i].author.avatar;
+          fragment.querySelector(`img`).alt = ads[i].offer.title;
           fragment.dataset.index = i;
           pinFragments.push(fragment);
         }
@@ -62,9 +62,11 @@
         }
       });
     },
-    load(count) {
-      this.fillTemplate(count);
-      this.show(count);
+    load(count, ads) {
+      window.dataModule.newAds = [];
+      window.dataModule.newAds.push(ads);
+      this.fillTemplate(count, ads);
+      this.show(count, ads);
     },
     mainDown() {
       MAIN_PIN.addEventListener(`mousedown`, this.onMainpinDown);

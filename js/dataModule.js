@@ -8,6 +8,7 @@
   }
   window.dataModule = {
     ads: [],
+    newAds: [],
     roomTypeTranslator: {
       PALACE: `Дворец`,
       FLAT: `Квартира`,
@@ -27,7 +28,7 @@
           features: []
         };
       });
-      window.pinModule.load(5);
+      window.pinModule.load(5, window.dataModule.ads);
     },
     error(errorText) {
       ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;

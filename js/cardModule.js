@@ -11,7 +11,7 @@
     mainCard: document.querySelector(`.map__card`),
     fill(index) {
       this.create();
-      let ad = window.dataModule.ads[index];
+      let ad = window.dataModule.newAds[0][index];
       this.mainCard.querySelector(`.popup__photos`).innerHTML = ``;
       this.mainCard.removeAttribute(`style`);
       this.mainCard.querySelector(`.popup__title`).textContent = ad.offer.title;
@@ -77,11 +77,11 @@
     },
     onDocumentEsc(e) {
       if (e.key === `Escape`) {
-        this.closeCard();
+        window.cardModule.closeCard();
       }
     },
     onCloseClick() {
-      this.closeCard();
+      window.cardModule.closeCard();
     }
   };
 

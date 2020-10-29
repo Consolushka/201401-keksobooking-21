@@ -3,7 +3,7 @@
 let url;
 let method;
 
-window.upload = {
+window.loadModule = {
   popup: ``,
   get(type) {
     if (type === `get`) {

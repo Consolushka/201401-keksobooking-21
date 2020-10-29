@@ -15,7 +15,7 @@ window.dataModule = {
     BUNGALOW: `Бунгало`
   },
   fillOffers() {
-    window.upload.send(`get`, ``, window.dataModule.load, window.dataModule.error);
+    window.loadModule.send(`get`, ``, window.dataModule.load, window.dataModule.error);
   },
   load(loadedAds) {
     for (let i = 0; i <= loadedAds.length - 1; i++) {

@@ -11,7 +11,7 @@ const SUCCESS_TEMPLATE = document.querySelector(`#success`);
 const ERROR_TEMPLATE = document.querySelector(`#error`);
 
 function closePopup() {
-  document.querySelector(`main`).removeChild(window.upload.popup);
+  document.querySelector(`main`).removeChild(window.loadModule.popup);
   document.removeEventListener(`keydown`, onPopupEnter);
   window.removeEventListener(`click`, closePopup);
   window.removeEventListener(`click`, onCloseClick);
@@ -25,21 +25,21 @@ function onPopupEnter(e) {
 
 function onCloseClick() {
   closePopup();
-  window.upload.popup.querySelector(`.error__button`).removeEventListener(`click`, onCloseClick);
+  window.loadModule.popup.querySelector(`.error__button`).removeEventListener(`click`, onCloseClick);
 }
 
 function createSuccess() {
-  window.upload.popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
-  document.querySelector(`main`).appendChild(window.upload.popup);
+  window.loadModule.popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
+  document.querySelector(`main`).appendChild(window.loadModule.popup);
   document.addEventListener(`keydown`, onPopupEnter);
   window.addEventListener(`click`, closePopup);
 }
 
 function createError() {
-  window.upload.popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
-  document.querySelector(`main`).appendChild(window.upload.popup);
+  window.loadModule.popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
+  document.querySelector(`main`).appendChild(window.loadModule.popup);
   document.addEventListener(`keydown`, onPopupEnter);
-  window.upload.popup.querySelector(`.error__button`).addEventListener(`click`, onCloseClick);
+  window.loadModule.popup.querySelector(`.error__button`).addEventListener(`click`, onCloseClick);
   window.addEventListener(`click`, onCloseClick);
 }
 
@@ -107,7 +107,7 @@ window.formModule = {
     }
   },
   submit(e) {
-    window.upload.send(`post`, new FormData(e.target), createSuccess, createError);
+    window.loadModule.send(`post`, new FormData(e.target), createSuccess, createError);
     e.preventDefault();
   },
   clear() {

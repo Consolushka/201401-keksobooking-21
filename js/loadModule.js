@@ -9,19 +9,16 @@
 
     xhr.open(`GET`, URL);
 
-    xhr.addEventListener(`load`, function () {
+    xhr.addEventListener(`load`, ()=> {
       if (xhr.status === window.utilModule.StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
       }
     });
-    xhr.timeout = window.utilModule.StatusCode.TIMEOUT;
-    xhr.addEventListener(`error`, function () {
+
+    xhr.addEventListener(`error`, ()=> {
       onError(`Произошла ошибка соединения`);
-    });
-    xhr.addEventListener(`timeout`, function () {
-      onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
     });
 
     xhr.send();

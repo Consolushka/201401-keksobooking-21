@@ -4,19 +4,15 @@
   const FORM = document.querySelector(`.ad-form`);
   const MAIN_PIN = document.querySelector(`.map__pin--main`);
   window.utilModule = {
-    START_CHECKIN: 12,
-    OCLOCK: `:00`,
     PIN_WIDTH: 40,
-    PIN_LOCATION_Y_START: 130,
-    MAIN_PIN_AFTER_WIDTH: 10,
     MAIN_PIN_AFTER_HEIGHT: 22,
     isReset: false,
-    additional: true,
     StatusCode: {
       OK: 200,
       PAGE_NOT_FOUND: 404,
       FORBIDDEN: 500,
       INTERNAL_SERVER: 500,
+      TIMEOUT: 0
     },
     FILE_TYPES: [`gif`, `jpg`, `jpeg`, `png`],
     setAddress() {

@@ -22,14 +22,14 @@
       let fileName = file.name.toLowerCase();
       let flag = false;
 
-      let matches = window.utilModule.FILE_TYPES.some(function (type) {
+      let matches = window.utilModule.FILE_TYPES.some((type)=> {
         return fileName.endsWith(type);
       });
 
       if (matches) {
         let reader = new FileReader();
 
-        reader.addEventListener(`load`, function () {
+        reader.addEventListener(`load`, ()=> {
           preview.src = reader.result;
         });
 

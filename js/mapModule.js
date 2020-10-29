@@ -3,44 +3,44 @@
 (function () {
   const PIN_CONTAINER = document.querySelector(`.map__pins`);
 
-  function openCardClick(evt) {
+  function onPinClick(evt) {
     window.cardModule.hide();
     let pinEl = evt.target.parentElement;
-    document.removeEventListener(`keydown`, openCardEnter);
-    window.mapModule.pins.forEach(function (pin) {
+    if (evt.target.tagName.toLowerCase() === `button`) {
+      pinEl = evt.target;
+    }
+    document.removeEventListener(`keydown`, onPinEnter);
+    window.mapModule.pins.forEach((pin)=> {
       pin.classList.remove(`map__pin--active`);
     });
     pinEl.classList.add(`map__pin--active`);
     window.cardModule.fill(pinEl.dataset.index);
-    window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeClick);
-    document.addEventListener(`keydown`, window.cardModule.closeEsc);
-    window.mapModule.counter++;
+    window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.onCloseClick);
+    document.addEventListener(`keydown`, window.cardModule.onDocumentEsc);
   }
 
-  function openCardEnter(evt) {
+  function onPinEnter(evt) {
     if (evt.key === `Enter`) {
       window.cardModule.hide();
       let pinEl = evt.target;
-      pinEl.removeEventListener(`click`, openCardClick);
+      pinEl.removeEventListener(`click`, onPinClick);
       window.cardModule.fill(pinEl.dataset.index);
-      window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.closeClick);
-      window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`focus`, window.cardModule.closeEsc);
-      window.mapModule.counter++;
+      window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.onCloseClick);
+      window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`focus`, window.cardModule.onDocumentEsc);
     }
-    document.removeEventListener(`keydown`, openCardEnter);
+    document.removeEventListener(`keydown`, onPinEnter);
   }
 
   window.mapModule = {
     pinContainer: [],
     pins: ``,
-    counter: 0,
     addPinsListener() {
       this.pins = PIN_CONTAINER.querySelectorAll(`button`);
       for (let i = 1; i < this.pins.length; i++) {
-        this.pins[i].addEventListener(`click`, openCardClick);
+        this.pins[i].addEventListener(`click`, onPinClick);
         // TODO: Исправить callback hell
-        this.pins[i].addEventListener(`focus`, function () {
-          document.addEventListener(`keydown`, openCardEnter);
+        this.pins[i].addEventListener(`focus`, ()=> {
+          document.addEventListener(`keydown`, onPinEnter);
         });
       }
     },

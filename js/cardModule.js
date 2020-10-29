@@ -11,28 +11,28 @@
     mainCard: document.querySelector(`.map__card`),
     fill(index) {
       this.create();
-      let ad = window.dataModule.ads[index];
+      let ad = window.dataModule.newAds[0][index];
       this.mainCard.querySelector(`.popup__photos`).innerHTML = ``;
       this.mainCard.removeAttribute(`style`);
       this.mainCard.querySelector(`.popup__title`).textContent = ad.offer.title;
       this.mainCard.querySelector(`.popup__text--address`).textContent = ad.offer.address;
       this.mainCard.querySelector(`.popup__text--price`).textContent = `${ad.offer.price} ₽/ночь`;
-      this.mainCard.querySelector(`.popup__type`).textContent = `${window.dataModule.RoomTypeTranslator[ad.offer.type]}`;
+      this.mainCard.querySelector(`.popup__type`).textContent = `${window.dataModule.roomTypeTranslator[ad.offer.type.toUpperCase()]}`;
       this.mainCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
       this.mainCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin}, выезд\t до ${ad.offer.checkout}`;
       this.mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
       this.mainCard.querySelector(`.popup__description `).textContent = ad.offer.description;
       this.mainCard.querySelector(`.popup__avatar`).src = ad.author.avatar;
       this.refactorLists(this.mainCard);
-      Object.keys(ad.offer).forEach(function (key) {
+      Object.keys(ad.offer).forEach((key)=> {
         if (ad.offer[key].length === 0) {
           switch (key) {
             case `rooms`:
             case `guests`:
-              window.cardModule.mainCard.querySelector(`.popup__text--capacity`).setAttribute(`style`, `display: none`);
+              this.mainCard.querySelector(`.popup__text--capacity`).setAttribute(`style`, `display: none`);
               break;
             default:
-              window.cardModule.mainCard.querySelector(`.popup__${key}`).setAttribute(`style`, `display: none`);
+              this.mainCard.querySelector(`.popup__${key}`).setAttribute(`style`, `display: none`);
               break;
           }
         }
@@ -72,13 +72,16 @@
       this.mainCard = document.querySelector(`.map__card`);
       this.mainCard.setAttribute(`style`, `display: none`);
     },
-    closeEsc(e) {
+    closeCard() {
+      window.cardModule.mainCard.setAttribute(`style`, `display: none`);
+    },
+    onDocumentEsc(e) {
       if (e.key === `Escape`) {
-        window.cardModule.mainCard.setAttribute(`style`, `display: none`);
+        window.cardModule.closeCard();
       }
     },
-    closeClick() {
-      window.cardModule.mainCard.setAttribute(`style`, `display: none`);
+    onCloseClick() {
+      window.cardModule.closeCard();
     }
   };
 

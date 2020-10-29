@@ -23,37 +23,27 @@
   };
 
   function getCountOfAds(ads) {
-    let count = 0;
+    let count = [];
     ads.forEach(function (ad) {
-      if (count < 5) {
-        if (ad[`matched`] >= 1) {
-          count++;
+      if (count.length < 5) {
+        if (ad.matched === window.renderModule.count) {
+          count.push(ad);
         }
+        // Просматриваем для каждого объявления его массив matches, и если значения ключей с this.matches совпадают, добавляем его в выводимый массив
       }
     });
-    return count;
+    window.pinModule.load(count.length, count);
   }
 
-  function sortByParam(ads) {
-    ads.sort((a, b) => a.matched < b.matched ? 1 : -1);
-    window.pinModule.load(getCountOfAds(ads));
-  }
-
-  function getTotalMatch(object) {
-    object[`matched`] = 0;
-    Object.keys(object[`matches`]).forEach(function (key) {
-      if (key === `features`) {
-        if (object[`matches`][key].length === 0) {
-          object[`matched`] += 1;
-        } else {
-          object[`matched`] += object[`matches`][key].length + 1;
-        }
-      } else {
-        object[`matched`] += object[`matches`][key];
-      }
-    });
-  }
   window.renderModule = {
+    match: {
+      type: -1,
+      guests: -1,
+      rooms: -1,
+      price: -1,
+      features: []
+    },
+    count: 0,
     change(evt) {
       switch (evt.target.name) {
         case `housing-type`:
@@ -69,64 +59,89 @@
           window.renderModule.filterPrice(evt.target.value);
           break;
         case `features`:
-          evt.target.setAttribute(`checked`, ``);
+          evt.target.toggleAttribute(`checked`);
           window.renderModule.filterFeatures(evt.target);
           break;
       }
     },
     simpleFilter(parameter, match) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
-        if (match === `any`) {
-          ad[`matches`][parameter] = 1;
-        } else {
-          ad[`matches`][parameter] = 0;
-          if (ad.offer[parameter].toString() === match) {
-            ad[`matches`][parameter]++;
-          }
+      if (match === `any`) {
+        this.match[parameter] = -1;
+        this.count--;
+      } else {
+        if (this.match[parameter] === -1) {
+          this.count++;
         }
-        getTotalMatch(ad);
-      });
-      sortByParam(window.dataModule.ads);
+        this.match[parameter] = match;
+      }
+      this.getTotalMatch();
     },
     filterPrice(value) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
-        ad[`matches`][`price`] = 0;
-        if (value === `any`) {
-          ad[`matches`][`price`] = 1;
+      if (value === `any`) {
+        this.match[`price`] = -1;
+        this.count--;
+      } else {
+        if (this.match.price === -1) {
+          this.count++;
         }
-        if (ad.offer.price >= Prices[value].min && ad.offer.price <= Prices[value].max) {
-          ad[`matches`][`price`]++;
-        }
-        getTotalMatch(ad);
-      });
-      sortByParam(window.dataModule.ads);
+        this.match[`price`] = value;
+        this.getTotalMatch();
+      }
     },
     filterFeatures(target) {
       window.cardModule.hide();
-      window.dataModule.ads.forEach(function (ad) {
-        ad.offer.features.forEach(function (feature) {
-          if (feature === target.value) {
-            if (target.checked) {
-              ad[`matches`][`features`].push(feature);
-            } else {
-              ad[`matches`][`features`].splice(ad[`matches`][`features`].indexOf(feature), 1);
-            }
-          }
-        });
-        getTotalMatch(ad);
-      });
-      sortByParam(window.dataModule.ads);
+      if (target.checked) {
+        this.count++;
+        this.match.features.push(target.value);
+      } else {
+        this.count--;
+        this.match.features.splice(this.match.features.indexOf(target.value), 1);
+      }
+      this.getTotalMatch();
     },
     removeFilters() {
       FILTER_FORM.reset();
-      FILTER_FORM.querySelectorAll(`fieldset`).forEach(function (field) {
-        field.querySelectorAll(`input`).forEach(function (input) {
+      FILTER_FORM.querySelectorAll(`fieldset`).forEach((field) => {
+        field.querySelectorAll(`input`).forEach((input) => {
           input.removeAttribute(`checked`);
         });
       });
+    },
+    sumFeatures(key, ad) {
+      window.renderModule.match[key].forEach((filteredFiture) => {
+        ad.offer[key].forEach((feature) => {
+          if (filteredFiture === feature) {
+            ad.matched++;
+          }
+        });
+      });
+    },
+    getTotalMatch() {
+      window.dataModule.ads.forEach((ad) => {
+        ad[`matched`] = 0;
+        Object.keys(window.renderModule.match).forEach(function (key) {
+          if (window.renderModule.match[key] !== -1) {
+            switch (key) {
+              case `price`:
+                if (ad.offer[key] >= Prices[window.renderModule.match[key]].min && ad.offer[key] <= Prices[window.renderModule.match[key]].max) {
+                  ad.matched++;
+                }
+                break;
+              case `features`:
+                window.renderModule.sumFeatures(key, ad);
+                break;
+              default:
+                if (ad.offer[key].toString() === window.renderModule.match[key]) {
+                  ad.matched++;
+                }
+                break;
+            }
+          }
+        });
+      });
+      getCountOfAds(window.dataModule.ads);
     }
-
   };
 })();

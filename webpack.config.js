@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   entry: [
     "./js/utilModule.js",
-    "./js/loadModule.js",
+    "./js/uploadModule.js",
     "./js/dataModule.js",
     "./js/pinModule.js",
     "./js/debounceModule.js",
@@ -11,7 +11,6 @@ module.exports = {
     "./js/cardModule.js",
     "./js/formModule.js",
     "./js/fileModule.js",
-    "./js/uploadModule.js",
     "./js/mapModule.js",
     "./js/main.js",
   ],

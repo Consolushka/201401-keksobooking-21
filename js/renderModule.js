@@ -22,15 +22,15 @@ const Prices = {
 };
 
 function getCountOfAds(ads) {
-  let count = [];
-  ads.forEach(function (ad) {
-    if (count.length < 5) {
+  let currentList = [];
+  ads.forEach((ad)=> {
+    if (currentList.length < 5) {
       if (ad.matched === window.renderModule.count) {
-        count.push(ad);
+        currentList.push(ad);
       }
     }
   });
-  window.pinModule.load(count.length, count);
+  window.pinModule.load(currentList.length, currentList);
 }
 
 window.renderModule = {

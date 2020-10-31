@@ -11,7 +11,6 @@ module.exports = {
     "./js/cardModule.js",
     "./js/formModule.js",
     "./js/fileModule.js",
-    "./js/uploadModule.js",
     "./js/mapModule.js",
     "./js/main.js",
   ],

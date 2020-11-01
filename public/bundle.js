@@ -491,6 +491,14 @@ const AD_TIMEIN = FORM.querySelector(`#timein`);
 const AD_TIMEOUT = FORM.querySelector(`#timeout`);
 const SUCCESS_TEMPLATE = document.querySelector(`#success`);
 const ERROR_TEMPLATE = document.querySelector(`#error`);
+const NOT_FOR_GUESTS = `0`;
+const HUNDRED = `100`;
+const MinPrice = {
+  bungalow: `0`,
+  flat: `1000`,
+  house: `5000`,
+  palace: `10000`
+};
 
 const closePopup = ()=> {
   document.querySelector(`main`).removeChild(window.loadModule.popup);
@@ -534,11 +542,12 @@ window.formModule = {
         AD_CAPACITY.querySelectorAll(`option`).forEach((option)=> {
           option.removeAttribute(`selected`);
           option.setAttribute(`disabled`, ``);
-          if (option.value <= AD_ROOMS.value && option.value !== `0`) {
+          if (option.value <= AD_ROOMS.value && option.value !== NOT_FOR_GUESTS) {
             option.removeAttribute(`disabled`);
-          } else if (option.value === `0` && AD_ROOMS.value === `100`) {
+          } else if (option.value === NOT_FOR_GUESTS && AD_ROOMS.value === HUNDRED) {
             AD_CAPACITY.querySelectorAll(`option`)[2].setAttribute(`disabled`, ``);
             option.setAttribute(`selected`, ``);
+            AD_CAPACITY.setCustomValidity(``);
             option.removeAttribute(`disabled`);
           }
         });
@@ -546,29 +555,11 @@ window.formModule = {
       case `capacity`:
         if (capacityValue === roomsValue) {
           AD_CAPACITY.setCustomValidity(``);
-        } else if (capacityValue === `0` && roomsValue === `100`) {
-          AD_CAPACITY.setCustomValidity(``);
         }
         break;
       case `type`:
-        switch (AD_TYPE.value) {
-          case `bungalow`:
-            AD_PRICE.setAttribute(`min`, `0`);
-            AD_PRICE.setAttribute(`placeholder`, `0`);
-            break;
-          case `flat`:
-            AD_PRICE.setAttribute(`min`, `1000`);
-            AD_PRICE.setAttribute(`placeholder`, `1000`);
-            break;
-          case `house`:
-            AD_PRICE.setAttribute(`min`, `5000`);
-            AD_PRICE.setAttribute(`placeholder`, `5000`);
-            break;
-          case `palace`:
-            AD_PRICE.setAttribute(`min`, `10000`);
-            AD_PRICE.setAttribute(`placeholder`, `10000`);
-            break;
-        }
+        AD_PRICE.setAttribute(`min`, MinPrice[AD_TYPE.value]);
+        AD_PRICE.setAttribute(`placeholder`, MinPrice[AD_TYPE.value]);
         break;
       case `timein`:
         AD_TIMEOUT.value = AD_TIMEIN.value;
@@ -588,9 +579,7 @@ window.formModule = {
     let capacityValue = FORM.querySelector(`#capacity`).value;
     let roomsValue = FORM.querySelector(`#room_number`).value;
     if (capacityValue !== roomsValue) {
-      if (roomsValue === 100 && capacityValue !== `0`) {
-        AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
-      }
+      AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
     }
   },
   submit(e) {

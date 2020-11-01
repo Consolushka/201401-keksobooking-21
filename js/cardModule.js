@@ -70,15 +70,12 @@ window.cardModule = {
     this.mainCard = document.querySelector(`.map__card`);
     this.mainCard.setAttribute(`style`, `display: none`);
   },
-  closeCard() {
-    window.cardModule.mainCard.setAttribute(`style`, `display: none`);
-  },
   onDocumentEsc(e) {
     if (e.key === `Escape`) {
-      window.cardModule.closeCard();
+      window.cardModule.hide();
     }
   },
   onCloseClick() {
-    window.cardModule.closeCard();
+    window.cardModule.hide();
   }
 };

@@ -6,44 +6,44 @@ const FILTER_FORM = document.querySelector(`.map__filters`);
 const MAP_FILTERS = document.querySelector(`.map__filters`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 
-function toggleState() {
+const toggleState = ()=> {
   toggleInactiveState(false);
-}
+};
 
-function openMap() {
+const openMap = ()=>{
   toggleInactiveState(true);
-  document.removeEventListener(`keydown`, onMainpinEnter);
-  MAIN_PIN.removeEventListener(`mousedown`, onMainpinClick);
-}
+  document.removeEventListener(`keydown`, onMainPinEnter);
+  MAIN_PIN.removeEventListener(`mousedown`, onMainPinClick);
+};
 
-function onMainpinClick(evt) {
+const onMainPinClick = (evt)=>{
   window.pinModule.mainDown();
   if (evt.button === 0) {
     openMap();
   }
-}
+};
 
-function submitForm(evt) {
+const submitForm = (evt)=>{
   window.formModule.submit(evt);
   toggleInactiveState(false);
   SUBMIT_FORM.removeEventListener(`submit`, submitForm);
-}
+};
 
-function onMainpinEnter() {
+const onMainPinEnter = ()=>{
   window.pinModule.mainDown();
-  document.addEventListener(`keydown`, function (e) {
+  document.addEventListener(`keydown`, (e)=> {
     if (e.key === `Enter`) {
       openMap();
     }
   });
-}
+};
 
-function toggleInactiveState(isRemoving) {
+const toggleInactiveState = (isRemoving)=>{
   if (isRemoving) {
     MAP.classList.remove(`map--faded`);
     SUBMIT_FORM.classList.remove(`ad-form--disabled`);
-    MAIN_PIN.removeEventListener(`mousedown`, onMainpinClick);
-    MAIN_PIN.removeEventListener(`focus`, onMainpinEnter);
+    MAIN_PIN.removeEventListener(`mousedown`, onMainPinClick);
+    MAIN_PIN.removeEventListener(`focus`, onMainPinEnter);
     window.pinModule.mainDown();
     window.dataModule.fillOffers();
     window.utilModule.setAddress();
@@ -51,7 +51,6 @@ function toggleInactiveState(isRemoving) {
     SUBMIT_FORM.addEventListener(`submit`, submitForm);
     SUBMIT_FORM.querySelector(`.ad-form__reset`).addEventListener(`click`, toggleState);
     FILTER_FORM.addEventListener(`change`, window.debounceModule(window.renderModule.change));
-    window.cardModule.create();
 
     SUBMIT_FORM.addEventListener(`change`, (evt)=> {
       window.formModule.checkingChanges(evt);
@@ -83,10 +82,10 @@ function toggleInactiveState(isRemoving) {
     MAP.classList.add(`map--faded`);
     SUBMIT_FORM.classList.add(`ad-form--disabled`);
     SUBMIT_FORM.querySelector(`#address`).value = `${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientWidth / 2)},${Math.trunc(MAIN_PIN.offsetLeft - MAIN_PIN.clientHeight / 2)}`;
-    MAIN_PIN.addEventListener(`mousedown`, onMainpinClick);
-    MAIN_PIN.addEventListener(`focus`, onMainpinEnter);
+    MAIN_PIN.addEventListener(`mousedown`, onMainPinClick);
+    MAIN_PIN.addEventListener(`focus`, onMainPinEnter);
     window.utilModule.isReset = true;
-    document.removeEventListener(`mousemove`, window.pinModule.onMainpinDown);
+    document.removeEventListener(`mousemove`, window.pinModule.onMainPinDown);
   }
   document.querySelector(`.notice`).querySelectorAll(`fieldset`).forEach((field)=> {
     field.toggleAttribute(`disabled`);
@@ -99,6 +98,6 @@ function toggleInactiveState(isRemoving) {
   MAP_FILTERS.querySelectorAll(`select`).forEach((field)=> {
     field.toggleAttribute(`disabled`);
   });
-}
+};
 
 toggleInactiveState(false);

@@ -4,21 +4,21 @@ const PIN_TEMPLATE = document.querySelector(`#pin`).content.querySelector(`.map_
 const PIN_CONTAINER = document.querySelector(`.map__pins`);
 const MAIN_PIN = document.querySelector(`.map__pin--main`);
 const MAP = document.querySelector(`.map`);
-const UPPER_BORDER = 130;
-const LOWER_BORDER = 630;
+const UPPER_BORDER = 74;
+const LOWER_BORDER = 576;
 let pinFragments = [];
-function onMainpinMove(event) {
+const onMainPinMove = (e)=> {
   let margin = (document.documentElement.clientWidth - MAP.clientWidth) / 2;
-  if ((event.pageX > margin) && (event.pageX < (document.documentElement.clientWidth - margin)) && (event.pageY < LOWER_BORDER) && (event.pageY > UPPER_BORDER)) {
-    MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(event.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(event.pageY - MAIN_PIN.clientHeight / 2)}px`);
+  if ((e.pageX > margin) && (e.pageX < (document.documentElement.clientWidth - margin)) && (e.pageY < LOWER_BORDER) && (e.pageY > UPPER_BORDER)) {
+    MAIN_PIN.setAttribute(`style`, `left: ${Math.ceil(e.clientX - margin - MAIN_PIN.clientWidth / 2)}px; top: ${Math.ceil(e.pageY - MAIN_PIN.clientHeight / 2)}px`);
     window.utilModule.setAddress();
   }
-}
+};
 window.pinModule = {
-  onMainpinDown() {
-    document.addEventListener(`mousemove`, onMainpinMove);
+  onMainPinDown() {
+    document.addEventListener(`mousemove`, onMainPinMove);
     document.addEventListener(`mouseup`, ()=> {
-      document.removeEventListener(`mousemove`, onMainpinMove);
+      document.removeEventListener(`mousemove`, onMainPinMove);
       window.utilModule.setAddress();
     });
   },
@@ -68,6 +68,6 @@ window.pinModule = {
     this.show(count, ads);
   },
   mainDown() {
-    MAIN_PIN.addEventListener(`mousedown`, this.onMainpinDown);
+    MAIN_PIN.addEventListener(`mousedown`, this.onMainPinDown);
   }
 };

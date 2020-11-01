@@ -1,12 +1,13 @@
 'use strict';
 
 const ERROR_POPUP = document.querySelector(`.popup--error`);
-function onCloseClick() {
+const onCloseClick = ()=> {
   ERROR_POPUP.classList.add(`popup--hidden`);
   ERROR_POPUP.querySelector(`.popup__close`).removeEventListener(`click`, onCloseClick);
-}
+};
 window.dataModule = {
   ads: [],
+  countOfAds: 5,
   newAds: [],
   roomTypeTranslator: {
     PALACE: `Дворец`,
@@ -21,13 +22,13 @@ window.dataModule = {
     for (let i = 0; i <= loadedAds.length - 1; i++) {
       window.dataModule.ads.push(loadedAds[i]);
     }
-    window.dataModule.ads.forEach(function (ad) {
+    window.dataModule.ads.forEach((ad)=> {
       ad[`matched`] = 0;
       ad[`matches`] = {
         features: []
       };
     });
-    window.pinModule.load(5, window.dataModule.ads);
+    window.pinModule.load(window.dataModule.countOfAds, window.dataModule.ads);
   },
   error(errorText) {
     ERROR_POPUP.querySelector(`.popup__text`).textContent = errorText;

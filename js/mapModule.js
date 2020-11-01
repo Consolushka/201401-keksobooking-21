@@ -2,7 +2,7 @@
 
 const PIN_CONTAINER = document.querySelector(`.map__pins`);
 
-function onPinClick(evt) {
+const onPinClick = (evt)=> {
   window.cardModule.hide();
   let pinEl = evt.target.parentElement;
   if (evt.target.tagName.toLowerCase() === `button`) {
@@ -16,9 +16,9 @@ function onPinClick(evt) {
   window.cardModule.fill(pinEl.dataset.index);
   window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`mousedown`, window.cardModule.onCloseClick);
   document.addEventListener(`keydown`, window.cardModule.onDocumentEsc);
-}
+};
 
-function onPinEnter(evt) {
+const onPinEnter = (evt)=> {
   if (evt.key === `Enter`) {
     window.cardModule.hide();
     let pinEl = evt.target;
@@ -28,7 +28,7 @@ function onPinEnter(evt) {
     window.cardModule.mainCard.querySelector(`.popup__close`).addEventListener(`focus`, window.cardModule.onDocumentEsc);
   }
   document.removeEventListener(`keydown`, onPinEnter);
-}
+};
 
 window.mapModule = {
   pinContainer: [],

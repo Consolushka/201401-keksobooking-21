@@ -21,17 +21,17 @@ const Prices = {
   }
 };
 
-function getCountOfAds(ads) {
+const getCountOfAds = (ads)=> {
   let currentList = [];
   ads.forEach((ad)=> {
-    if (currentList.length < 5) {
+    if (currentList.length < window.dataModule.countOfAds) {
       if (ad.matched === window.renderModule.count) {
         currentList.push(ad);
       }
     }
   });
   window.pinModule.load(currentList.length, currentList);
-}
+};
 
 window.renderModule = {
   match: {
@@ -108,9 +108,9 @@ window.renderModule = {
     });
   },
   sumFeatures(key, ad) {
-    window.renderModule.match[key].forEach((filteredFiture) => {
+    window.renderModule.match[key].forEach((filteredFeature) => {
       ad.offer[key].forEach((feature) => {
-        if (filteredFiture === feature) {
+        if (filteredFeature === feature) {
           ad.matched++;
         }
       });
@@ -119,7 +119,7 @@ window.renderModule = {
   getTotalMatch() {
     window.dataModule.ads.forEach((ad) => {
       ad[`matched`] = 0;
-      Object.keys(window.renderModule.match).forEach(function (key) {
+      Object.keys(window.renderModule.match).forEach((key)=> {
         if (window.renderModule.match[key] !== -1) {
           switch (key) {
             case `price`:

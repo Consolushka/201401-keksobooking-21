@@ -10,38 +10,38 @@ const AD_TIMEOUT = FORM.querySelector(`#timeout`);
 const SUCCESS_TEMPLATE = document.querySelector(`#success`);
 const ERROR_TEMPLATE = document.querySelector(`#error`);
 
-function closePopup() {
+const closePopup = ()=> {
   document.querySelector(`main`).removeChild(window.loadModule.popup);
   document.removeEventListener(`keydown`, onPopupEnter);
   window.removeEventListener(`click`, closePopup);
   window.removeEventListener(`click`, onCloseClick);
-}
+};
 
-function onPopupEnter(e) {
+const onPopupEnter = (e)=> {
   if (e.key === `Escape`) {
     closePopup();
   }
-}
+};
 
-function onCloseClick() {
+const onCloseClick = ()=> {
   closePopup();
   window.loadModule.popup.querySelector(`.error__button`).removeEventListener(`click`, onCloseClick);
-}
+};
 
-function createSuccess() {
+const createSuccess = ()=> {
   window.loadModule.popup = SUCCESS_TEMPLATE.cloneNode(true).content.querySelector(`.success`);
   document.querySelector(`main`).appendChild(window.loadModule.popup);
   document.addEventListener(`keydown`, onPopupEnter);
   window.addEventListener(`click`, closePopup);
-}
+};
 
-function createError() {
+const createError = ()=> {
   window.loadModule.popup = ERROR_TEMPLATE.cloneNode(true).content.querySelector(`.error`);
   document.querySelector(`main`).appendChild(window.loadModule.popup);
   document.addEventListener(`keydown`, onPopupEnter);
   window.loadModule.popup.querySelector(`.error__button`).addEventListener(`click`, onCloseClick);
   window.addEventListener(`click`, onCloseClick);
-}
+};
 
 window.formModule = {
   checkingChanges(evt) {
@@ -55,6 +55,7 @@ window.formModule = {
           if (option.value <= AD_ROOMS.value && option.value !== `0`) {
             option.removeAttribute(`disabled`);
           } else if (option.value === `0` && AD_ROOMS.value === `100`) {
+            AD_CAPACITY.querySelectorAll(`option`)[2].setAttribute(`disabled`, ``);
             option.setAttribute(`selected`, ``);
             option.removeAttribute(`disabled`);
           }
@@ -62,6 +63,8 @@ window.formModule = {
         break;
       case `capacity`:
         if (capacityValue === roomsValue) {
+          AD_CAPACITY.setCustomValidity(``);
+        } else if (capacityValue === `0` && roomsValue === `100`) {
           AD_CAPACITY.setCustomValidity(``);
         }
         break;
@@ -103,7 +106,9 @@ window.formModule = {
     let capacityValue = FORM.querySelector(`#capacity`).value;
     let roomsValue = FORM.querySelector(`#room_number`).value;
     if (capacityValue !== roomsValue) {
-      AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
+      if (roomsValue === 100 && capacityValue !== `0`) {
+        AD_CAPACITY.setCustomValidity(`Значения должны быть идентичны`);
+      }
     }
   },
   submit(e) {
